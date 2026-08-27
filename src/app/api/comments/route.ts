@@ -13,7 +13,9 @@ function escapeHtml(unsafe: string) {
 
 export async function GET() {
   try {
-    const comments = db.prepare('SELECT * FROM comments ORDER BY createdAt DESC').all();
+    const comments = await db.comment.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
     return NextResponse.json(comments);
   } catch (error) {
     console.error('Error fetching comments:', error);
@@ -42,10 +44,14 @@ export async function POST(request: Request) {
     const safeContent = escapeHtml(content.trim());
     const id = crypto.randomUUID();
 
-    const stmt = db.prepare('INSERT INTO comments (id, name, email, content) VALUES (?, ?, ?, ?)');
-    stmt.run(id, safeName, safeEmail, safeContent);
-
-    const newComment = db.prepare('SELECT * FROM comments WHERE id = ?').get(id);
+    const newComment = await db.comment.create({
+      data: {
+        id,
+        name: safeName,
+        email: safeEmail,
+        content: safeContent,
+      }
+    });
 
     return NextResponse.json(newComment, { status: 201 });
   } catch (error) {

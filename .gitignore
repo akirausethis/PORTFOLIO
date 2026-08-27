@@ -44,3 +44,6 @@ next-env.d.ts
 portfolio.db*
 .agents/
 upload_payload.json
+node_modules/
+dist/
+.env
