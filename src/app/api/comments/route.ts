@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import db from '@/lib/db';
 import crypto from 'crypto';
 
+export const dynamic = 'force-dynamic';
+
 function escapeHtml(unsafe: string) {
     return unsafe
          .replace(/&/g, "&amp;")
