@@ -14,6 +14,10 @@ function escapeHtml(unsafe: string) {
  }
 
 export async function GET() {
+  // If DB is not configured, return empty array gracefully
+  if (!process.env.POSTGRES_URL) {
+    return NextResponse.json([]);
+  }
   try {
     const comments = await db.comment.findMany({
       orderBy: { createdAt: 'desc' },
@@ -21,11 +25,15 @@ export async function GET() {
     return NextResponse.json(comments);
   } catch (error) {
     console.error('Error fetching comments:', error);
-    return NextResponse.json({ error: 'Failed to fetch comments' }, { status: 500 });
+    // Return empty array instead of 500 to avoid crashing the UI
+    return NextResponse.json([]);
   }
 }
 
 export async function POST(request: Request) {
+  if (!process.env.POSTGRES_URL) {
+    return NextResponse.json({ error: 'Comments are not available yet. Database not connected.' }, { status: 503 });
+  }
   try {
     const { name, email, content } = await request.json();
 
