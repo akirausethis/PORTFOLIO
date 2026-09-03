@@ -46,7 +46,7 @@ export default function FloatingNav() {
     <>
       <header
         className={clsx(
-          "fixed inset-x-0 z-50 transition-all duration-500 flex justify-center pointer-events-none",
+          "fixed inset-x-0 z-[100] transition-all duration-500 flex justify-center pointer-events-none",
           isScrolled ? "top-4 lg:top-6" : "top-0 py-8 lg:py-10"
         )}
       >
