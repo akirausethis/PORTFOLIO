@@ -87,7 +87,7 @@ export default function About() {
                   Kelvin Marcello
                 </span>
                 <span className="text-xs text-foreground/50 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/60">
-                  '03
+                  2004
                 </span>
               </div>
             </motion.div>
