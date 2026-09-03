@@ -146,16 +146,10 @@ export default function Skills() {
             </button>
           ))}
 
-          {/* Legend */}
-          <div className="ml-auto hidden md:flex items-center gap-4 text-xs text-foreground/40 font-medium">
-            <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-foreground inline-block" />Expert</span>
-            <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-foreground/30 inline-block" />Proficient</span>
-            <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-foreground/10 inline-block" />Learning</span>
-          </div>
         </motion.div>
 
         {/* ── Skill grid ── */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-24">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-12">
           {filtered.map((skill, i) => (
             <motion.div
               key={skill.name}
@@ -187,12 +181,6 @@ export default function Skills() {
                   </motion.p>
                 )}
               </div>
-              {/* Level dot */}
-              <span className={`absolute top-3 right-3 text-[9px] px-1.5 py-0.5 rounded-full font-bold tracking-wider ${
-                hoveredSkill === skill.name ? "bg-background/20 text-background" : levelColor[skill.level]
-              }`}>
-                {skill.level[0]}
-              </span>
             </motion.div>
           ))}
         </div>
@@ -200,38 +188,40 @@ export default function Skills() {
       </div>
 
       {/* ── Marquee scrollers ── */}
-      <div className="relative w-full flex flex-col gap-5 py-10 border-y border-border overflow-hidden bg-foreground/[0.015]">
-        {/* Gradient fade edges */}
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full mb-12">
+        <div className="relative w-full flex flex-col gap-5 py-8 border border-border overflow-hidden bg-foreground/[0.015] rounded-3xl">
+          {/* Gradient fade edges */}
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
-        {/* Row 1: left */}
-        <div className="flex w-full overflow-hidden group">
-          <div className="flex w-max animate-marquee-left group-hover:[animation-play-state:paused] gap-5 px-4">
-            {marqueeTop.map((skill, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3 px-6 py-3 border border-border rounded-full bg-background text-foreground shrink-0 hover:bg-foreground hover:text-background transition-colors duration-300 cursor-default"
-              >
-                <skill.Icon className="w-5 h-5" />
-                <span className="text-base font-heading font-medium tracking-tight whitespace-nowrap">{skill.name}</span>
-              </div>
-            ))}
+          {/* Row 1: left */}
+          <div className="flex w-full overflow-hidden group">
+            <div className="flex w-max animate-marquee-left group-hover:[animation-play-state:paused] gap-5 px-4">
+              {marqueeTop.map((skill, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 px-6 py-3 border border-border rounded-full bg-background text-foreground shrink-0 hover:bg-foreground hover:text-background transition-colors duration-300 cursor-default"
+                >
+                  <skill.Icon className="w-5 h-5" />
+                  <span className="text-base font-heading font-medium tracking-tight whitespace-nowrap">{skill.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {/* Row 2: right */}
-        <div className="flex w-full overflow-hidden group">
-          <div className="flex w-max animate-marquee-right group-hover:[animation-play-state:paused] gap-5 px-4">
-            {marqueeBottom.map((skill, idx) => (
-              <div
-                key={idx}
-                className="flex items-center gap-3 px-6 py-3 border border-border rounded-full bg-background text-foreground shrink-0 hover:bg-foreground hover:text-background transition-colors duration-300 cursor-default"
-              >
-                <skill.Icon className="w-5 h-5" />
-                <span className="text-base font-heading font-medium tracking-tight whitespace-nowrap">{skill.name}</span>
-              </div>
-            ))}
+          {/* Row 2: right */}
+          <div className="flex w-full overflow-hidden group">
+            <div className="flex w-max animate-marquee-right group-hover:[animation-play-state:paused] gap-5 px-4">
+              {marqueeBottom.map((skill, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-3 px-6 py-3 border border-border rounded-full bg-background text-foreground shrink-0 hover:bg-foreground hover:text-background transition-colors duration-300 cursor-default"
+                >
+                  <skill.Icon className="w-5 h-5" />
+                  <span className="text-base font-heading font-medium tracking-tight whitespace-nowrap">{skill.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
