@@ -15,7 +15,7 @@ function escapeHtml(unsafe: string) {
 
 export async function GET() {
   // If DB is not configured, return empty array gracefully
-  if (!process.env.POSTGRES_URL) {
+  if (!process.env.POSTGRES_URL && !process.env.DATABASE_URL) {
     return NextResponse.json([]);
   }
   try {
@@ -31,8 +31,11 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  if (!process.env.POSTGRES_URL) {
-    return NextResponse.json({ error: 'Comments are not available yet. Database not connected.' }, { status: 503 });
+  if (!process.env.POSTGRES_URL && !process.env.DATABASE_URL) {
+    return NextResponse.json(
+      { error: "Database not configured yet." },
+      { status: 503 }
+    );
   }
   try {
     const { name, email, content } = await request.json();
