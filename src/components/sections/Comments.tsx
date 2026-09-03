@@ -90,7 +90,7 @@ export default function Comments() {
       setTimeout(() => setSuccess(false), 5000);
 
     } catch (err: unknown) {
-      setError(err.message || "An error occurred");
+      setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setIsSubmitting(false);
     }
