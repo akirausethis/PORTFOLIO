@@ -115,10 +115,10 @@ export default function About() {
               className="grid grid-cols-1 md:grid-cols-2 gap-8 text-lg text-foreground/70 font-light leading-relaxed mb-12 max-w-3xl"
             >
               <p>
-                I'm a software engineering intern at Eterna Indonesia and an Informatics student at Universitas Ciputra. I'm obsessed with solving real problems with clean, purposeful code.
+                I&apos;m a software engineering intern at Eterna Indonesia and an Informatics student at Universitas Ciputra. I&apos;m obsessed with solving real problems with clean, purposeful code.
               </p>
               <p>
-                My core stack revolves around Next.js, React, and TypeScript. I'm also exploring how AI can be woven into everyday applications — not as a gimmick, but as genuine leverage.
+                My core stack revolves around Next.js, React, and TypeScript. I&apos;m also exploring how AI can be woven into everyday applications — not as a gimmick, but as genuine leverage.
               </p>
             </motion.div>
 

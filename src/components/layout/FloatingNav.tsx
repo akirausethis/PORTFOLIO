@@ -3,13 +3,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
+import Link from "next/link";
 import { Menu, X, ArrowUpRight, Briefcase, User, GraduationCap, MessageSquare } from "lucide-react";
 
 const navItems = [
   { name: "Work",       href: "/#projects",   description: "Projects that I did",       icon: Briefcase },
   { name: "About",      href: "/#about",       description: "Know more about me",        icon: User },
   { name: "Experience", href: "/#experience",  description: "My professional journey",   icon: GraduationCap },
-  { name: "Contact",    href: "/#contact",     description: "Let's build together",      icon: MessageSquare },
+  { name: "Contact",    href: "/#contact",     description: "Let&apos;s build together",      icon: MessageSquare },
 ];
 
 export default function FloatingNav() {
@@ -58,7 +59,7 @@ export default function FloatingNav() {
           )}
         >
           {/* ── Logo ── */}
-          <a
+          <Link
             href="/#home"
             className={clsx(
               "font-heading font-extrabold tracking-tight flex-shrink-0 relative z-50 group",
@@ -71,7 +72,7 @@ export default function FloatingNav() {
               isScrolled && !isMobileMenuOpen && "hidden sm:inline" // hide "workspace" on mobile when scrolled
             )}>workspace</span>
             <span className="text-foreground/30">.</span>
-          </a>
+          </Link>
 
           {/* ── Desktop Center Nav ── */}
           <nav className={clsx(
@@ -81,7 +82,7 @@ export default function FloatingNav() {
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace("/#", "");
               return (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className={clsx(
@@ -100,23 +101,23 @@ export default function FloatingNav() {
                       transition={{ type: "spring", stiffness: 500, damping: 35 }}
                     />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
 
           {/* ── Desktop Right CTA ── */}
           <div className="hidden lg:flex items-center">
-            <a
+            <Link
               href="/#contact"
               className={clsx(
                 "group flex items-center gap-2 font-medium bg-foreground text-background rounded-full hover:bg-foreground/85 transition-all duration-300 active:scale-95",
                 isScrolled && !isMobileMenuOpen ? "px-4 py-2 text-[13px]" : "px-5 py-2.5 text-[14px]"
               )}
             >
-              <span>Let's Talk</span>
+              <span>Let&apos;s Talk</span>
               <ArrowUpRight className="w-3.5 h-3.5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
+            </Link>
           </div>
 
           {/* ── Mobile Hamburger ── */}
@@ -163,11 +164,8 @@ export default function FloatingNav() {
                 const Icon = item.icon;
                 const isActive = activeSection === item.href.replace("/#", "");
                 return (
-                  <motion.a
+                  <Link
                     key={item.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 + i * 0.07, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={clsx(
@@ -191,7 +189,7 @@ export default function FloatingNav() {
                       "w-5 h-5 shrink-0 transition-all duration-300 opacity-0 group-hover:opacity-100 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
                       isActive && "opacity-100"
                     )} />
-                  </motion.a>
+                  </Link>
                 );
               })}
             </nav>
@@ -204,14 +202,14 @@ export default function FloatingNav() {
               className="mt-auto flex flex-col gap-4"
             >
               <div className="h-px w-full bg-border" />
-              <a
+              <Link
                 href="/#contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="group inline-flex items-center justify-center gap-3 text-lg font-medium px-8 py-5 bg-foreground text-background rounded-2xl hover:bg-foreground/85 transition-all duration-300 active:scale-[0.98] w-full"
               >
-                <span>Let's Talk</span>
+                <span>Let&apos;s Talk</span>
                 <ArrowUpRight className="w-5 h-5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+              </Link>
               <p className="text-xs text-foreground/30 text-center font-medium tracking-wide">
                 akirabusinessinq@gmail.com
               </p>

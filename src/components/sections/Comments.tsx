@@ -45,6 +45,7 @@ export default function Comments() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchComments();
   }, []);
 
@@ -88,7 +89,7 @@ export default function Comments() {
       // Hide success message after 5 seconds
       setTimeout(() => setSuccess(false), 5000);
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || "An error occurred");
     } finally {
       setIsSubmitting(false);
@@ -134,7 +135,7 @@ export default function Comments() {
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="mt-5 text-lg text-foreground/60 font-light max-w-xl"
           >
-            Have thoughts on my work? Drop a comment below — I'd love to hear from you.
+            Have thoughts on my work? Drop a comment below — I&apos;d love to hear from you.
           </motion.p>
         </div>
 

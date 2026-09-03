@@ -153,7 +153,7 @@ export default function Experience() {
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
               className="text-5xl md:text-6xl lg:text-7xl font-heading font-medium tracking-tight text-foreground leading-[1.05]"
             >
-              Where I've<br />
+              Where I&apos;ve<br />
               <span className="text-foreground/25">been & built.</span>
             </motion.h2>
           </div>

@@ -32,7 +32,7 @@ export default function Contact() {
       setSuccess(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setSuccess(false), 5000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || "An unexpected error occurred");
     } finally {
       setIsSubmitting(false);
@@ -56,10 +56,10 @@ export default function Contact() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-heading font-medium tracking-tight text-foreground mb-6">
-              Let's build something great together.
+              Let&apos;s build something great together.
             </h2>
             <p className="text-xl text-foreground/70 font-light mb-12 max-w-2xl">
-              Have a project in mind or just want to say hi? Fill out the form below and I'll get back to you as soon as possible.
+              Have a project in mind or just want to say hi? Fill out the form below and I&apos;ll get back to you as soon as possible.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
@@ -92,7 +92,7 @@ export default function Contact() {
                 )}
                 {success && (
                   <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex items-center space-x-2 text-green-500 text-sm p-4 bg-green-500/10 rounded-lg">
-                    <CheckCircle2 className="w-4 h-4" /><span>Message sent successfully! I'll be in touch soon.</span>
+                    <CheckCircle2 className="w-4 h-4" /><span>Message sent successfully! I&apos;ll be in touch soon.</span>
                   </motion.div>
                 )}
               </AnimatePresence>
