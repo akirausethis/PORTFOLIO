@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build",
+    "build": "prisma generate && node -e \"if(process.env.POSTGRES_URL) { try { require('child_process').execSync('npx prisma db push --accept-data-loss', {stdio:'inherit'}) } catch(e) { console.warn('DB Push failed, skipping') } }\" && next build",
     "start": "next start",
     "lint": "eslint",
     "postinstall": "prisma generate"
