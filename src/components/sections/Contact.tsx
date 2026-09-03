@@ -33,7 +33,7 @@ export default function Contact() {
       setFormData({ name: "", email: "", subject: "", message: "" });
       setTimeout(() => setSuccess(false), 5000);
     } catch (err: unknown) {
-      setError(err.message || "An unexpected error occurred");
+      setError(err instanceof Error ? err.message : "An unexpected error occurred");
     } finally {
       setIsSubmitting(false);
     }
