@@ -37,9 +37,9 @@ export default async function ProjectDetailPage({ params }: Props) {
   return (
     <article className="min-h-screen bg-background text-foreground pb-32 font-sans selection:bg-foreground selection:text-background">
       
-      {/* Sticky Header / Back Button */}
-      <div className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm border-b border-border/50">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 h-20 flex items-center">
+      {/* Back Button */}
+      <div className="w-full pt-32 lg:pt-40 pb-8">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <Link href="/#projects" className="group inline-flex items-center space-x-3 text-[15px] font-medium text-foreground/70 hover:text-foreground transition-colors duration-200">
             <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" />
             <span>Back to Index</span>
@@ -47,7 +47,7 @@ export default async function ProjectDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-24 lg:pt-32">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 pt-8 lg:pt-12">
         
         {/* 01 Overview */}
         <header className="mb-24 lg:mb-32 relative">
