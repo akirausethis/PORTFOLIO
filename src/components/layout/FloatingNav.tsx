@@ -4,13 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
 import Link from "next/link";
-import { Menu, X, ArrowUpRight, Briefcase, User, GraduationCap, MessageSquare } from "lucide-react";
+import { Menu, X, ArrowUpRight, Briefcase, User, GraduationCap, MessageSquare, Sparkles } from "lucide-react";
 
 const navItems = [
   { name: "Work",       href: "/#projects",   description: "Projects that I did",       icon: Briefcase },
   { name: "About",      href: "/#about",       description: "Know more about me",        icon: User },
   { name: "Experience", href: "/#experience",  description: "My professional journey",   icon: GraduationCap },
-  { name: "Contact",    href: "/#contact",     description: "Let&apos;s build together",      icon: MessageSquare },
+  { name: "Creative",   href: "/creative",     description: "Photography, design & film", icon: Sparkles },
+  { name: "Contact",    href: "/#contact",     description: "Let&apos;s build together",  icon: MessageSquare },
 ];
 
 export default function FloatingNav() {
