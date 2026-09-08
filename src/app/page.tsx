@@ -3,6 +3,7 @@ import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
 import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
+import Creative from "@/components/sections/Creative";
 import Comments from "@/components/sections/Comments";
 import Contact from "@/components/sections/Contact";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <div><Projects /></div>
       <div><Experience /></div>
       <div><Skills /></div>
+      <div><Creative /></div>
       <div><Comments /></div>
       <div><Contact /></div>
     </div>
