@@ -14,12 +14,14 @@ const tabs: { id: FilterTab; label: string }[] = [
   { id: "photography", label: "Photography" },
   { id: "graphic-design", label: "Graphic Design" },
   { id: "video-editing", label: "Video Editing" },
+  { id: "motion-design", label: "Motion Design" },
 ];
 
 const categoryDot: Record<CreativeCategory, string> = {
   photography: "bg-sky-400",
   "graphic-design": "bg-violet-400",
   "video-editing": "bg-amber-400",
+  "motion-design": "bg-emerald-400",
 };
 
 export default function CreativePage() {

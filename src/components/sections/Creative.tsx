@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowUpRight, Camera, Palette, Video } from "lucide-react";
+import { ArrowUpRight, Camera, Palette, Video, Film } from "lucide-react";
 
 const tools = [
   "Photoshop",
@@ -29,7 +29,12 @@ const pillars = [
   {
     icon: Video,
     label: "Video Editing",
-    description: "Short-form, motion & cinematic",
+    description: "Short-form & cinematic",
+  },
+  {
+    icon: Film,
+    label: "Motion Design",
+    description: "Kinetic typography & animation",
   },
 ];
 
