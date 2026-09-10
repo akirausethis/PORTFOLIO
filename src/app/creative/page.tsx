@@ -81,14 +81,14 @@ function GalleryCard({
         />
       )}
 
-      {/* YouTube thumbnail at 16:9 */}
+      {/* YouTube thumbnail */}
       {isVideo && (
-        <div className="relative">
+        <div className={clsx("relative w-full overflow-hidden", work.aspect === "portrait" ? "aspect-[9/16]" : "aspect-video")}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={work.image}
             alt={work.title}
-            className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            className="w-full h-full object-cover block transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
           {/* Centered play button */}
           <div className="absolute inset-0 flex items-center justify-center">
@@ -216,10 +216,10 @@ export default function CreativePage() {
         </div>
       </div>
 
-      {/* ── Filter Bar — contained to grid width ── */}
-      <div className="sticky top-20 lg:top-24 z-40 bg-background/80 backdrop-blur-xl border-t border-border/60">
+      {/* ── Filter Bar — floating pill ── */}
+      <div className="sticky top-20 lg:top-24 z-40 w-full mb-10 pt-2 pointer-events-none">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="flex items-center gap-0.5 py-2.5 overflow-x-auto [scrollbar-width:none]">
+          <div className="bg-background/85 backdrop-blur-2xl border border-border/80 shadow-md rounded-2xl md:rounded-full flex items-center gap-0.5 py-2 px-3 overflow-x-auto [scrollbar-width:none] pointer-events-auto">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -248,7 +248,7 @@ export default function CreativePage() {
                 )}
               </button>
             ))}
-            <span className="ml-auto text-[11px] font-mono text-foreground/25 whitespace-nowrap pr-1">
+            <span className="ml-auto text-[11px] font-mono text-foreground/25 whitespace-nowrap pr-2 pl-4">
               {filtered.length} pieces
             </span>
           </div>

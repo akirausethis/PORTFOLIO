@@ -6,6 +6,7 @@ export interface CreativeWork {
   category: CreativeCategory;
   image: string;
   link?: string;
+  aspect?: "auto" | "portrait" | "landscape" | "square";
   year: string;
   description?: string;
   tools?: string[];
@@ -83,6 +84,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/EuOfGCIwPKQ/maxresdefault.jpg",
     link: "https://youtu.be/EuOfGCIwPKQ",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -92,6 +94,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/cqES8zBbBZQ/maxresdefault.jpg",
     link: "https://youtu.be/cqES8zBbBZQ",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -101,6 +104,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/q5XcTVWp2oM/maxresdefault.jpg",
     link: "https://youtu.be/q5XcTVWp2oM",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -110,6 +114,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/iwj6lHyHO7w/maxresdefault.jpg",
     link: "https://youtu.be/iwj6lHyHO7w",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -119,6 +124,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/6l2VzHbVVGY/maxresdefault.jpg",
     link: "https://youtu.be/6l2VzHbVVGY",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -128,6 +134,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/lQwnj2RLDF0/maxresdefault.jpg",
     link: "https://youtu.be/lQwnj2RLDF0",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -137,6 +144,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/3BoVPcyJw3A/maxresdefault.jpg",
     link: "https://youtu.be/3BoVPcyJw3A",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -146,6 +154,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/53Er2yniAos/maxresdefault.jpg",
     link: "https://youtu.be/53Er2yniAos",
     year: "2024",
+    aspect: "portrait",
     tools: ["Premiere Pro", "CapCut"],
   },
   {
@@ -155,6 +164,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/3k2Vcrz8PHQ/maxresdefault.jpg",
     link: "https://youtu.be/3k2Vcrz8PHQ",
     year: "2023",
+    aspect: "landscape",
     tools: ["Premiere Pro"],
   },
   {
@@ -164,6 +174,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/gMpVkfrAasw/maxresdefault.jpg",
     link: "https://youtu.be/gMpVkfrAasw",
     year: "2023",
+    aspect: "landscape",
     tools: ["Premiere Pro"],
   },
   {
@@ -173,6 +184,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/njg9biKAzuE/maxresdefault.jpg",
     link: "https://youtu.be/njg9biKAzuE",
     year: "2023",
+    aspect: "landscape",
     tools: ["Premiere Pro"],
   },
   {
@@ -182,6 +194,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/18MQfYhH5U8/maxresdefault.jpg",
     link: "https://youtu.be/18MQfYhH5U8",
     year: "2023",
+    aspect: "landscape",
     tools: ["Premiere Pro"],
   },
   {
@@ -191,6 +204,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/OMn297ALgzU/maxresdefault.jpg",
     link: "https://youtu.be/OMn297ALgzU",
     year: "2023",
+    aspect: "landscape",
     tools: ["Premiere Pro"],
   },
   {
@@ -200,6 +214,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/Ck4arpx1LUY/maxresdefault.jpg",
     link: "https://youtu.be/Ck4arpx1LUY",
     year: "2023",
+    aspect: "landscape",
     tools: ["Premiere Pro"],
   },
   {
@@ -209,6 +224,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/iuB8iASP3so/maxresdefault.jpg",
     link: "https://youtu.be/iuB8iASP3so",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -218,6 +234,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/RNxvo8Rlw24/maxresdefault.jpg",
     link: "https://youtu.be/RNxvo8Rlw24",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -227,6 +244,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/WAJHcbXO4Es/maxresdefault.jpg",
     link: "https://youtu.be/WAJHcbXO4Es",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -236,6 +254,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/2HKBxCgTB_0/maxresdefault.jpg",
     link: "https://youtu.be/2HKBxCgTB_0",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -245,6 +264,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/T1BJ8B1eBpo/maxresdefault.jpg",
     link: "https://youtu.be/T1BJ8B1eBpo",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -254,6 +274,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/uKWtphm-nlk/maxresdefault.jpg",
     link: "https://youtu.be/uKWtphm-nlk",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -263,6 +284,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/p79bOFRDmKQ/maxresdefault.jpg",
     link: "https://youtu.be/p79bOFRDmKQ",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   },
   {
@@ -272,6 +294,7 @@ export const creativeWorks: CreativeWork[] = [
     image: "https://img.youtube.com/vi/j-rK08JCXRw/maxresdefault.jpg",
     link: "https://youtu.be/j-rK08JCXRw",
     year: "2023",
+    aspect: "landscape",
     tools: ["Alight Motion", "After Effects"],
   }
 ];
