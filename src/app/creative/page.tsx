@@ -88,7 +88,7 @@ export default function CreativePage() {
       </div>
 
       {/* ── Filter Tabs ── */}
-      <div className="border-t border-b border-border sticky top-0 bg-background/90 backdrop-blur-xl z-40">
+      <div className="border-t border-b border-border sticky top-20 lg:top-24 bg-background/90 backdrop-blur-xl z-40">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
           <div className="flex items-center gap-1 py-3 overflow-x-auto">
             {tabs.map((tab) => (
