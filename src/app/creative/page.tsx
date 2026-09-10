@@ -42,15 +42,14 @@ function getYoutubeId(link: string) {
   return "";
 }
 
+// Single card — respects natural media aspect ratios
 function GalleryCard({
   work,
   index,
-  isFeatured,
   onClick,
 }: {
   work: CreativeWork;
   index: number;
-  isFeatured: boolean;
   onClick: () => void;
 }) {
   const isVideo = !!work.link;
@@ -58,86 +57,84 @@ function GalleryCard({
 
   return (
     <motion.button
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.05, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ delay: index * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       onClick={onClick}
-      className={clsx(
-        "group relative overflow-hidden rounded-2xl bg-foreground/[0.03] text-left w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/30",
-        isFeatured ? "aspect-[16/10]" : "aspect-[4/5]"
-      )}
+      className="group relative overflow-hidden rounded-2xl bg-foreground/[0.04] w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 block"
     >
-      {/* Thumbnail */}
-      {!isEmpty && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={work.image}
-          alt={work.title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-        />
-      )}
-
-      {/* Empty placeholder */}
+      {/* ── Media ── */}
       {isEmpty && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-foreground/20">
+        <div className="aspect-square flex flex-col items-center justify-center gap-3 text-foreground/20">
           <ImageIcon className="w-8 h-8" strokeWidth={1} />
           <span className="text-[11px] font-mono uppercase tracking-widest">Coming Soon</span>
         </div>
       )}
 
-      {/* Gradient scrim */}
-      <div
-        className={clsx(
-          "absolute inset-0 bg-gradient-to-t to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100",
-          isEmpty
-            ? "from-foreground/5"
-            : `from-black/75 via-black/20 ${categoryBg[work.category]}`
-        )}
-      />
+      {/* Image at its natural ratio */}
+      {!isEmpty && !isVideo && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={work.image}
+          alt={work.title}
+          className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+        />
+      )}
 
-      {/* Play button — videos only */}
+      {/* YouTube thumbnail at 16:9 */}
       {isVideo && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-white/25 group-hover:scale-110 group-hover:border-white/40">
-            <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+        <div className="relative">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={work.image}
+            alt={work.title}
+            className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
+          {/* Centered play button */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-black/60 group-hover:scale-110 group-hover:border-white/40">
+              <Play className="w-4 h-4 text-white fill-white ml-0.5" />
+            </div>
           </div>
         </div>
       )}
 
-      {/* Bottom info */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 md:p-5">
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <span className={clsx("w-1.5 h-1.5 rounded-full shrink-0", categoryDot[work.category])} />
-          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/55">
-            {categoryLabels[work.category]}
+      {/* ── Bottom gradient + info overlay ── */}
+      {!isEmpty && (
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Gradient scrim — fades in on hover */}
+          <div className={clsx(
+            "absolute inset-0 bg-gradient-to-t to-transparent transition-opacity duration-400",
+            `from-black/80 via-black/10 ${categoryBg[work.category]}`,
+            "opacity-0 group-hover:opacity-100"
+          )} />
+
+          {/* Info — slides up on hover */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className={clsx("w-1.5 h-1.5 rounded-full shrink-0", categoryDot[work.category])} />
+              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/60">
+                {categoryLabels[work.category]}
+              </span>
+            </div>
+            <p className="font-heading font-semibold text-[15px] tracking-tight leading-snug text-white line-clamp-2">
+              {work.title}
+            </p>
+            {work.tools && (
+              <p className="text-white/45 text-[11px] mt-1">{work.tools.join(" · ")}</p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Year — top right, always visible */}
+      {!isEmpty && (
+        <div className="absolute top-3 right-3">
+          <span className="text-[10px] font-mono text-white/0 group-hover:text-white/40 transition-colors duration-300 bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded-full">
+            {work.year}
           </span>
         </div>
-        <p
-          className={clsx(
-            "font-heading font-semibold tracking-tight leading-snug text-white line-clamp-2",
-            isFeatured ? "text-xl md:text-2xl" : "text-[15px]"
-          )}
-        >
-          {work.title}
-        </p>
-        {work.tools && (
-          <p
-            className={clsx(
-              "text-white/45 text-xs mt-1.5 transition-all duration-300",
-              isFeatured
-                ? "opacity-100"
-                : "opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0"
-            )}
-          >
-            {work.tools.join(" · ")}
-          </p>
-        )}
-      </div>
-
-      {/* Year badge */}
-      <div className="absolute top-3.5 right-3.5">
-        <span className="text-[10px] font-mono text-white/35">{work.year}</span>
-      </div>
+      )}
     </motion.button>
   );
 }
@@ -153,9 +150,7 @@ export default function CreativePage() {
 
   useEffect(() => {
     document.body.style.overflow = selectedWork ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => { document.body.style.overflow = ""; };
   }, [selectedWork]);
 
   useEffect(() => {
@@ -221,10 +216,10 @@ export default function CreativePage() {
         </div>
       </div>
 
-      {/* ── Filter Bar ── */}
-      <div className="sticky top-20 lg:top-24 z-40 border-t border-border/60 bg-background/80 backdrop-blur-xl">
+      {/* ── Filter Bar — contained to grid width ── */}
+      <div className="sticky top-20 lg:top-24 z-40 bg-background/80 backdrop-blur-xl border-t border-border/60">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="flex items-center gap-0.5 py-2 overflow-x-auto [scrollbar-width:none]">
+          <div className="flex items-center gap-0.5 py-2.5 overflow-x-auto [scrollbar-width:none]">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -237,13 +232,11 @@ export default function CreativePage() {
                 )}
               >
                 {tab.dot && (
-                  <span
-                    className={clsx(
-                      "w-1.5 h-1.5 rounded-full transition-opacity",
-                      tab.dot,
-                      activeTab === tab.id ? "opacity-0" : "opacity-60"
-                    )}
-                  />
+                  <span className={clsx(
+                    "w-1.5 h-1.5 rounded-full transition-opacity",
+                    tab.dot,
+                    activeTab === tab.id ? "opacity-0" : "opacity-60"
+                  )} />
                 )}
                 <span className="relative z-10">{tab.label}</span>
                 {activeTab === tab.id && (
@@ -262,7 +255,7 @@ export default function CreativePage() {
         </div>
       </div>
 
-      {/* ── Gallery Grid ── */}
+      {/* ── Masonry Gallery — natural aspect ratios ── */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-10 lg:py-16">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -271,16 +264,16 @@ export default function CreativePage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
+            className="columns-1 sm:columns-2 lg:columns-3 gap-x-4"
           >
             {filtered.map((work, i) => (
-              <GalleryCard
-                key={work.id}
-                work={work}
-                index={i}
-                isFeatured={i === 0 && filtered.length > 2}
-                onClick={() => setSelectedWork(work)}
-              />
+              <div key={work.id} className="break-inside-avoid mb-4 inline-block w-full">
+                <GalleryCard
+                  work={work}
+                  index={i}
+                  onClick={() => setSelectedWork(work)}
+                />
+              </div>
             ))}
           </motion.div>
         </AnimatePresence>
@@ -320,7 +313,6 @@ export default function CreativePage() {
             className="fixed inset-0 z-[200] flex items-center justify-center bg-background/92 backdrop-blur-2xl"
             onClick={() => setSelectedWork(null)}
           >
-            {/* Close */}
             <button
               onClick={() => setSelectedWork(null)}
               className="absolute top-5 right-5 z-20 w-9 h-9 flex items-center justify-center rounded-full border border-border bg-background text-foreground/50 hover:text-foreground hover:border-foreground/20 transition-all"
@@ -336,7 +328,7 @@ export default function CreativePage() {
               className="w-full max-w-5xl mx-4 md:mx-16 overflow-auto max-h-[92vh] [scrollbar-width:none]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Media area */}
+              {/* Media */}
               <div className="rounded-2xl overflow-hidden bg-foreground/5 border border-border/40">
                 {selectedWork.link ? (
                   <div className="aspect-video">
@@ -349,12 +341,12 @@ export default function CreativePage() {
                     />
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center p-6 min-h-[30vh]">
+                  <div className="flex items-center justify-center p-6 min-h-[20vh]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={selectedWork.image}
                       alt={selectedWork.title}
-                      className="max-w-full max-h-[65vh] object-contain"
+                      className="max-w-full max-h-[70vh] w-auto h-auto object-contain"
                     />
                   </div>
                 )}
