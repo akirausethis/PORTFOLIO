@@ -130,14 +130,21 @@ export default function CreativePage() {
             transition={{ duration: 0.3 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px border-t border-l border-border"
           >
-            {filtered.map((work, i) => (
+            {filtered.map((work, i) => {
+              const CardWrapper = work.link ? "a" : "div";
+              return (
               <motion.div
                 key={work.id}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative border-r border-b border-border bg-background overflow-hidden aspect-[4/5]"
               >
+                <CardWrapper
+                  href={work.link}
+                  target={work.link ? "_blank" : undefined}
+                  rel={work.link ? "noopener noreferrer" : undefined}
+                  className="group block relative border-r border-b border-border bg-background overflow-hidden aspect-[4/5] cursor-pointer"
+                >
                 {/* Image or Video or Placeholder */}
                 {work.image ? (
                   work.image.endsWith(".mp4") ? (
@@ -196,8 +203,9 @@ export default function CreativePage() {
                 <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm border border-border/60 rounded-full px-2.5 py-1 text-[11px] font-mono text-foreground/50">
                   {work.year}
                 </div>
+                </CardWrapper>
               </motion.div>
-            ))}
+            )})}
           </motion.div>
         </AnimatePresence>
 
