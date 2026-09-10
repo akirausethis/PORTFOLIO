@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ImageIcon } from "lucide-react";
-import { creativeWorks, categoryLabels, type CreativeCategory } from "@/data/creative";
+import { ArrowLeft, ImageIcon, X } from "lucide-react";
+import { creativeWorks, categoryLabels, type CreativeCategory, type CreativeWork } from "@/data/creative";
 import clsx from "clsx";
 
 type FilterTab = "all" | CreativeCategory;
@@ -26,6 +26,19 @@ const categoryDot: Record<CreativeCategory, string> = {
 
 export default function CreativePage() {
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
+  const [selectedWork, setSelectedWork] = useState<CreativeWork | null>(null);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (selectedWork) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedWork]);
 
   const filtered =
     activeTab === "all"
@@ -131,7 +144,6 @@ export default function CreativePage() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px border-t border-l border-border"
           >
             {filtered.map((work, i) => {
-              const CardWrapper = work.link ? "a" : "div";
               return (
               <motion.div
                 key={work.id}
@@ -139,11 +151,9 @@ export default function CreativePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
-                <CardWrapper
-                  href={work.link}
-                  target={work.link ? "_blank" : undefined}
-                  rel={work.link ? "noopener noreferrer" : undefined}
-                  className="group block relative border-r border-b border-border bg-background overflow-hidden aspect-[4/5] cursor-pointer"
+                <button
+                  onClick={() => setSelectedWork(work)}
+                  className="group block w-full text-left relative border-r border-b border-border bg-background overflow-hidden aspect-[4/5] cursor-pointer"
                 >
                 {/* Image or Video or Placeholder */}
                 {work.image ? (
@@ -203,7 +213,7 @@ export default function CreativePage() {
                 <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-sm border border-border/60 rounded-full px-2.5 py-1 text-[11px] font-mono text-foreground/50">
                   {work.year}
                 </div>
-                </CardWrapper>
+                </button>
               </motion.div>
             )})}
           </motion.div>
@@ -233,6 +243,77 @@ export default function CreativePage() {
           </Link>
         </div>
       </div>
+      {/* ── Lightbox Modal ── */}
+      <AnimatePresence>
+        {selectedWork && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-12 bg-background/95 backdrop-blur-2xl"
+            onClick={() => setSelectedWork(null)}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setSelectedWork(null)}
+              className="absolute top-6 right-6 md:top-10 md:right-10 w-12 h-12 flex items-center justify-center rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            {/* Content Box */}
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full max-w-6xl max-h-[85vh] flex flex-col items-center justify-center rounded-2xl shadow-2xl overflow-y-auto hide-scrollbar"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {selectedWork.link ? (
+                <div className="w-full aspect-video bg-black rounded-xl overflow-hidden shadow-2xl ring-1 ring-border">
+                  <iframe
+                    src={`https://www.youtube.com/embed/${selectedWork.link.split("youtu.be/")[1]}?autoplay=1`}
+                    title={selectedWork.title}
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              ) : (
+                <div className="relative w-full h-[70vh] flex justify-center items-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={selectedWork.image}
+                    alt={selectedWork.title}
+                    className="max-w-full max-h-full object-contain rounded-xl shadow-2xl ring-1 ring-border"
+                  />
+                </div>
+              )}
+
+              {/* Meta Info */}
+              <div className="w-full mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4 p-2">
+                <div>
+                  <h3 className="text-2xl md:text-3xl font-heading font-bold tracking-tight">
+                    {selectedWork.title}
+                  </h3>
+                  {selectedWork.tools && (
+                    <p className="text-foreground/50 text-sm mt-2">
+                      {selectedWork.tools.join(" · ")}
+                    </p>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={clsx("w-2 h-2 rounded-full", categoryDot[selectedWork.category])} />
+                  <span className="text-[11px] font-bold uppercase tracking-widest text-foreground/50">
+                    {categoryLabels[selectedWork.category]}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
