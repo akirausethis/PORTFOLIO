@@ -138,14 +138,31 @@ export default function CreativePage() {
                 transition={{ delay: i * 0.04, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="group relative border-r border-b border-border bg-background overflow-hidden aspect-[4/5]"
               >
-                {/* Image or Placeholder */}
+                {/* Image or Video or Placeholder */}
                 {work.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={work.image}
-                    alt={work.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  work.image.endsWith(".mp4") ? (
+                    <video
+                      src={`${work.image}#t=0.001`}
+                      preload="metadata"
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      onMouseEnter={(e) => {
+                        e.currentTarget.play().catch(() => {});
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.pause();
+                      }}
+                    />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  )
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-foreground/[0.02] text-foreground/20">
                     <ImageIcon className="w-8 h-8" strokeWidth={1} />
