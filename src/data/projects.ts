@@ -169,6 +169,34 @@ export const projectsData: Project[] = [
     links: {
       github: "https://github.com/akirausethis/ENTEAM?utm_source=chatgpt.com"
     }
+  },
+  {
+    slug: "blandina-kitchen",
+    title: "BLANDINA KITCHEN",
+    category: "E-Commerce",
+    shortDescription: "A premium digital catalog and ordering platform for authentic home-cooked culinary creations.",
+    year: "2026",
+    role: "Web Developer",
+    technologies: {
+      frontend: ["Next.js", "Tailwind CSS"],
+      backend: ["TypeScript"],
+    },
+    images: ["/projects/blandinakitchen.jpg"],
+    problem: "My mother needed a professional, elegant digital catalog to showcase her premium home-cooked culinary offerings and simplify the ordering process for customers.",
+    solution: "Designed and developed an integrated, easy-to-use digital platform featuring a beautifully curated catalog and direct WhatsApp ordering workflow.",
+    architecture: "A highly responsive frontend application using Next.js and Tailwind CSS, focusing on warm aesthetics, high-quality image rendering, and seamless user experience.",
+    features: [
+      "Premium digital menu catalog",
+      "Direct-to-WhatsApp ordering integration",
+      "Warm, elegant UI design reflecting home-cooked authenticity",
+      "Responsive layout for mobile and desktop users"
+    ],
+    challenges: "Translating the feeling of 'authentic home cooking' into a digital interface while maintaining a modern, premium aesthetic.",
+    results: "Delivered a beautiful, fully functional catalog that elevated the brand's professional image and streamlined the customer ordering experience.",
+    insights: "Sometimes the most effective e-commerce solutions don't require complex checkout systems; a beautifully curated catalog with a direct messaging integration can provide a highly personalized premium service.",
+    links: {
+      github: "https://github.com/akirausethis/BLANDINAKITCHEN"
+    }
   }
 ];
 
