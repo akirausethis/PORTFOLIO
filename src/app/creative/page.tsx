@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -53,7 +53,6 @@ function getYoutubeId(link: string) {
   return "";
 }
 
-// Single card — respects natural media aspect ratios
 function GalleryCard({
   work,
   index,
@@ -74,7 +73,6 @@ function GalleryCard({
       onClick={onClick}
       className="group relative overflow-hidden rounded-2xl bg-foreground/[0.04] w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 block"
     >
-      {/* ── Media ── */}
       {isEmpty && (
         <div className="aspect-square flex flex-col items-center justify-center gap-3 text-foreground/20">
           <ImageIcon className="w-8 h-8" strokeWidth={1} />
@@ -82,7 +80,6 @@ function GalleryCard({
         </div>
       )}
 
-      {/* Image at its natural ratio */}
       {!isEmpty && !isVideo && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -92,7 +89,6 @@ function GalleryCard({
         />
       )}
 
-      {/* YouTube thumbnail */}
       {isVideo && (
         <div className={clsx("relative w-full overflow-hidden", work.aspect === "portrait" ? "aspect-[9/16]" : "aspect-video")}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -101,7 +97,6 @@ function GalleryCard({
             alt={work.title}
             className="w-full h-full object-cover block transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
-          {/* Centered play button */}
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="w-12 h-12 rounded-full bg-black/40 backdrop-blur-sm border border-white/20 flex items-center justify-center transition-all duration-300 group-hover:bg-black/60 group-hover:scale-110 group-hover:border-white/40">
               <Play className="w-4 h-4 text-white fill-white ml-0.5" />
@@ -110,17 +105,13 @@ function GalleryCard({
         </div>
       )}
 
-      {/* ── Bottom gradient + info overlay ── */}
       {!isEmpty && (
         <div className="absolute inset-0 pointer-events-none">
-          {/* Gradient scrim — fades in on hover */}
           <div className={clsx(
             "absolute inset-0 bg-gradient-to-t to-transparent transition-opacity duration-400",
             `from-black/80 via-black/10 ${categoryBg[work.category]}`,
             "opacity-0 group-hover:opacity-100"
           )} />
-
-          {/* Info — slides up on hover */}
           <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
             <div className="flex items-center gap-1.5 mb-1">
               <span className={clsx("w-1.5 h-1.5 rounded-full shrink-0", categoryDot[work.category])} />
@@ -138,7 +129,6 @@ function GalleryCard({
         </div>
       )}
 
-      {/* Year — top right, always visible */}
       {!isEmpty && (
         <div className="absolute top-3 right-3">
           <span className="text-[10px] font-mono text-white/0 group-hover:text-white/40 transition-colors duration-300 bg-black/30 backdrop-blur-sm px-2 py-0.5 rounded-full">
@@ -155,7 +145,6 @@ export default function CreativePage() {
   const [activeSubTab, setActiveSubTab] = useState<string>("all");
   const [selectedWork, setSelectedWork] = useState<CreativeWork | null>(null);
 
-  // When parent tab changes, reset sub-tab
   useEffect(() => {
     setActiveSubTab("all");
   }, [activeTab]);
@@ -182,31 +171,23 @@ export default function CreativePage() {
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-foreground selection:text-background">
 
-      {/* ── Header ── */}
+      {/* Header */}
       <div className="pt-32 lg:pt-40">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-2.5 text-[13px] font-medium text-foreground/40 hover:text-foreground transition-colors mb-16"
-          >
+          <Link href="/" className="group inline-flex items-center gap-2.5 text-[13px] font-medium text-foreground/40 hover:text-foreground transition-colors mb-16">
             <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
             Back to Portfolio
           </Link>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-20 mb-20 items-end">
             <div className="lg:col-span-6">
-              <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-foreground/35 mb-7">
-                Visual World
-              </p>
-              <h1 className="text-6xl md:text-8xl lg:text-[96px] font-heading font-bold tracking-tight leading-[0.9]">
-                Creative<br />Works.
-              </h1>
+              <p className="text-[11px] font-bold uppercase tracking-[0.25em] text-foreground/35 mb-7">Visual World</p>
+              <h1 className="text-6xl md:text-8xl lg:text-[96px] font-heading font-bold tracking-tight leading-[0.9]">Creative<br />Works.</h1>
             </div>
             <div className="lg:col-span-6">
               <div className="border-l-2 border-border pl-8 space-y-5">
                 <p className="text-[17px] text-foreground/65 font-light leading-relaxed">
-                  Beyond engineering — years of documenting events, crafting visual
-                  identities, and telling stories through the lens as{" "}
+                  Beyond engineering — years of documenting events, crafting visual identities, and telling stories through the lens as{" "}
                   <span className="text-foreground font-medium">Coordinator of PDD</span>.
                 </p>
                 <div className="flex items-center gap-8 pt-1">
@@ -223,9 +204,7 @@ export default function CreativePage() {
                 </div>
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {["Photoshop", "After Effects", "Alight Motion", "CapCut", "Canva", "Pixellab", "Lightroom"].map((t) => (
-                    <span key={t} className="text-[11px] font-mono bg-foreground/5 border border-border/60 rounded-full px-3 py-1 text-foreground/45">
-                      {t}
-                    </span>
+                    <span key={t} className="text-[11px] font-mono bg-foreground/5 border border-border/60 rounded-full px-3 py-1 text-foreground/45">{t}</span>
                   ))}
                 </div>
               </div>
@@ -234,77 +213,74 @@ export default function CreativePage() {
         </div>
       </div>
 
-      {/* ── Filter Bar — floating pill ── */}
-      <div className="sticky top-20 lg:top-24 z-40 w-full mb-10 pt-2 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col items-start gap-3">
-          <div className="bg-background/85 backdrop-blur-2xl border border-border/80 shadow-md rounded-2xl md:rounded-full flex items-center gap-0.5 py-2 px-3 overflow-x-auto [scrollbar-width:none] pointer-events-auto max-w-full">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={clsx(
-                  "relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 whitespace-nowrap",
-                  activeTab === tab.id
-                    ? "text-background"
-                    : "text-foreground/40 hover:text-foreground hover:bg-foreground/5"
-                )}
-              >
-                {tab.dot && (
-                  <span className={clsx(
-                    "w-1.5 h-1.5 rounded-full transition-opacity",
-                    tab.dot,
-                    activeTab === tab.id ? "opacity-0" : "opacity-60"
-                  )} />
-                )}
-                <span className="relative z-10">{tab.label}</span>
-                {activeTab === tab.id && (
-                  <motion.div
-                    layoutId="tab-bg"
-                    className="absolute inset-0 bg-foreground rounded-full"
-                    transition={{ type: "spring", stiffness: 450, damping: 35 }}
-                  />
-                )}
-              </button>
-            ))}
-            <span className="ml-auto text-[11px] font-mono text-foreground/25 whitespace-nowrap pr-2 pl-4">
+      {/* Filter Bar */}
+      <div className="sticky top-20 lg:top-24 z-40 border-t border-border/40 bg-background/80 backdrop-blur-2xl">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+          <div className="flex items-center overflow-x-auto [scrollbar-width:none]">
+            <div className="flex items-center shrink-0 py-3">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={clsx(
+                    "relative inline-flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 whitespace-nowrap",
+                    activeTab === tab.id ? "text-background" : "text-foreground/40 hover:text-foreground"
+                  )}
+                >
+                  {tab.dot && (
+                    <span className={clsx("w-1.5 h-1.5 rounded-full transition-opacity shrink-0", tab.dot, activeTab === tab.id ? "opacity-0" : "opacity-70")} />
+                  )}
+                  <span className="relative z-10">{tab.label}</span>
+                  {activeTab === tab.id && (
+                    <motion.div layoutId="main-tab-pill" className="absolute inset-0 bg-foreground rounded-full" transition={{ type: "spring", stiffness: 500, damping: 38 }} />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            <AnimatePresence>
+              {activeTab !== "all" && subTabs[activeTab] && (
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: "auto" }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                  className="flex items-center overflow-hidden shrink-0"
+                >
+                  <div className="w-px h-5 bg-border/60 mx-3 shrink-0" />
+                  <div className="flex items-center gap-0.5">
+                    {subTabs[activeTab].map((subTab) => (
+                      <button
+                        key={subTab.id}
+                        onClick={() => setActiveSubTab(subTab.id)}
+                        className={clsx(
+                          "relative px-4 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 whitespace-nowrap",
+                          activeSubTab === subTab.id
+                            ? "text-foreground bg-foreground/[0.08] border border-border"
+                            : "text-foreground/40 hover:text-foreground"
+                        )}
+                      >
+                        {subTab.label}
+                      </button>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <span className="ml-auto pl-6 text-[11px] font-mono text-foreground/25 whitespace-nowrap shrink-0">
               {filtered.length} pieces
             </span>
           </div>
-
-          {/* Sub-tabs (only show if the active tab has them) */}
-          <AnimatePresence>
-            {activeTab !== "all" && subTabs[activeTab] && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="bg-background/85 backdrop-blur-xl border border-border/60 shadow-sm rounded-full flex items-center gap-1 py-1.5 px-2 overflow-x-auto [scrollbar-width:none] pointer-events-auto max-w-full ml-2"
-              >
-                {subTabs[activeTab].map((subTab) => (
-                  <button
-                    key={subTab.id}
-                    onClick={() => setActiveSubTab(subTab.id)}
-                    className={clsx(
-                      "relative px-4 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 whitespace-nowrap",
-                      activeSubTab === subTab.id
-                        ? "text-foreground bg-foreground/10"
-                        : "text-foreground/40 hover:text-foreground hover:bg-foreground/5"
-                    )}
-                  >
-                    {subTab.label}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
 
-      {/* ── Masonry Gallery — natural aspect ratios ── */}
+      {/* Gallery */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-10 lg:py-16">
         <AnimatePresence mode="popLayout">
           <motion.div
-            key={activeTab}
+            key={`${activeTab}-${activeSubTab}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -313,11 +289,7 @@ export default function CreativePage() {
           >
             {filtered.map((work, i) => (
               <div key={work.id} className="break-inside-avoid mb-4 inline-block w-full">
-                <GalleryCard
-                  work={work}
-                  index={i}
-                  onClick={() => setSelectedWork(work)}
-                />
+                <GalleryCard work={work} index={i} onClick={() => setSelectedWork(work)} />
               </div>
             ))}
           </motion.div>
@@ -331,23 +303,18 @@ export default function CreativePage() {
         )}
       </div>
 
-      {/* ── Footer ── */}
+      {/* Footer */}
       <div className="border-t border-border">
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-14 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <p className="text-foreground/35 text-sm font-light">
-            More work available on request — let&apos;s talk.
-          </p>
-          <Link
-            href="/#contact"
-            className="group inline-flex items-center gap-2.5 text-[13px] font-semibold bg-foreground text-background rounded-full px-6 py-3 hover:opacity-85 transition-opacity"
-          >
+          <p className="text-foreground/35 text-sm font-light">More work available on request — let&apos;s talk.</p>
+          <Link href="/#contact" className="group inline-flex items-center gap-2.5 text-[13px] font-semibold bg-foreground text-background rounded-full px-6 py-3 hover:opacity-85 transition-opacity">
             Get in touch
             <ArrowLeft className="w-3.5 h-3.5 rotate-180 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
       </div>
 
-      {/* ── Lightbox Modal ── */}
+      {/* Lightbox */}
       <AnimatePresence>
         {selectedWork && (
           <motion.div
@@ -373,7 +340,6 @@ export default function CreativePage() {
               className="w-full max-w-5xl mx-4 md:mx-16 overflow-auto max-h-[92vh] [scrollbar-width:none]"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Media */}
               <div className="rounded-2xl overflow-hidden bg-foreground/5 border border-border/40">
                 {selectedWork.link ? (
                   <div className="aspect-video">
@@ -388,16 +354,11 @@ export default function CreativePage() {
                 ) : (
                   <div className="flex items-center justify-center p-6 min-h-[20vh]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={selectedWork.image}
-                      alt={selectedWork.title}
-                      className="max-w-full max-h-[70vh] w-auto h-auto object-contain"
-                    />
+                    <img src={selectedWork.image} alt={selectedWork.title} className="max-w-full max-h-[70vh] w-auto h-auto object-contain" />
                   </div>
                 )}
               </div>
 
-              {/* Meta */}
               <div className="mt-5 px-1 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
@@ -406,9 +367,7 @@ export default function CreativePage() {
                       {categoryLabels[selectedWork.category]} · {selectedWork.year}
                     </span>
                   </div>
-                  <h3 className="text-2xl md:text-3xl font-heading font-bold tracking-tight">
-                    {selectedWork.title}
-                  </h3>
+                  <h3 className="text-2xl md:text-3xl font-heading font-bold tracking-tight">{selectedWork.title}</h3>
                   {selectedWork.tools && (
                     <p className="text-foreground/40 text-sm mt-2">{selectedWork.tools.join(" · ")}</p>
                   )}
