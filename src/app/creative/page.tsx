@@ -17,23 +17,34 @@ type FilterTab = "all" | CreativeCategory;
 const tabs: { id: FilterTab; label: string; dot?: string }[] = [
   { id: "all", label: "All Work" },
   { id: "photography", label: "Photography", dot: "bg-sky-400" },
-  { id: "graphic-design", label: "Graphic Design", dot: "bg-violet-400" },
   { id: "video-editing", label: "Video Editing", dot: "bg-amber-400" },
-  { id: "motion-design", label: "Motion Design", dot: "bg-emerald-400" },
+  { id: "motion-editing", label: "Motion Editing", dot: "bg-emerald-400" },
 ];
+
+const subTabs: Record<string, { id: string; label: string }[]> = {
+  "video-editing": [
+    { id: "all", label: "All" },
+    { id: "ads", label: "ADS" },
+    { id: "amv", label: "AMV" },
+    { id: "recap", label: "RECAP" },
+  ],
+  "motion-editing": [
+    { id: "all", label: "All" },
+    { id: "gfx", label: "GFX" },
+    { id: "motion-design", label: "Motion Design" },
+  ],
+};
 
 const categoryDot: Record<CreativeCategory, string> = {
   photography: "bg-sky-400",
-  "graphic-design": "bg-violet-400",
   "video-editing": "bg-amber-400",
-  "motion-design": "bg-emerald-400",
+  "motion-editing": "bg-emerald-400",
 };
 
 const categoryBg: Record<CreativeCategory, string> = {
   photography: "from-sky-500/20",
-  "graphic-design": "from-violet-500/20",
   "video-editing": "from-amber-500/20",
-  "motion-design": "from-emerald-500/20",
+  "motion-editing": "from-emerald-500/20",
 };
 
 function getYoutubeId(link: string) {
@@ -141,12 +152,19 @@ function GalleryCard({
 
 export default function CreativePage() {
   const [activeTab, setActiveTab] = useState<FilterTab>("all");
+  const [activeSubTab, setActiveSubTab] = useState<string>("all");
   const [selectedWork, setSelectedWork] = useState<CreativeWork | null>(null);
 
-  const filtered =
-    activeTab === "all"
-      ? creativeWorks
-      : creativeWorks.filter((w) => w.category === activeTab);
+  // When parent tab changes, reset sub-tab
+  useEffect(() => {
+    setActiveSubTab("all");
+  }, [activeTab]);
+
+  const filtered = creativeWorks.filter((w) => {
+    if (activeTab !== "all" && w.category !== activeTab) return false;
+    if (activeSubTab !== "all" && w.subcategory !== activeSubTab) return false;
+    return true;
+  });
 
   useEffect(() => {
     document.body.style.overflow = selectedWork ? "hidden" : "";
@@ -194,8 +212,8 @@ export default function CreativePage() {
                 <div className="flex items-center gap-8 pt-1">
                   {[
                     { n: creativeWorks.filter(w => w.category === "video-editing").length, label: "Videos" },
-                    { n: creativeWorks.filter(w => w.category === "motion-design").length, label: "GFX" },
-                    { n: creativeWorks.length, label: "Total Pieces" },
+                    { n: creativeWorks.filter(w => w.category === "motion-editing").length, label: "Motion" },
+                    { n: creativeWorks.filter(w => w.category === "photography").length, label: "Photos" },
                   ].map(({ n, label }) => (
                     <div key={label}>
                       <p className="text-3xl font-heading font-bold tracking-tight">{n}</p>
@@ -204,7 +222,7 @@ export default function CreativePage() {
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-1.5 pt-1">
-                  {["Photoshop", "After Effects", "Alight Motion", "CapCut", "Canva", "Pixellab"].map((t) => (
+                  {["Photoshop", "After Effects", "Alight Motion", "CapCut", "Canva", "Pixellab", "Lightroom"].map((t) => (
                     <span key={t} className="text-[11px] font-mono bg-foreground/5 border border-border/60 rounded-full px-3 py-1 text-foreground/45">
                       {t}
                     </span>
@@ -218,8 +236,8 @@ export default function CreativePage() {
 
       {/* ── Filter Bar — floating pill ── */}
       <div className="sticky top-20 lg:top-24 z-40 w-full mb-10 pt-2 pointer-events-none">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-          <div className="bg-background/85 backdrop-blur-2xl border border-border/80 shadow-md rounded-2xl md:rounded-full flex items-center gap-0.5 py-2 px-3 overflow-x-auto [scrollbar-width:none] pointer-events-auto">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col items-start gap-3">
+          <div className="bg-background/85 backdrop-blur-2xl border border-border/80 shadow-md rounded-2xl md:rounded-full flex items-center gap-0.5 py-2 px-3 overflow-x-auto [scrollbar-width:none] pointer-events-auto max-w-full">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -252,6 +270,33 @@ export default function CreativePage() {
               {filtered.length} pieces
             </span>
           </div>
+
+          {/* Sub-tabs (only show if the active tab has them) */}
+          <AnimatePresence>
+            {activeTab !== "all" && subTabs[activeTab] && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="bg-background/85 backdrop-blur-xl border border-border/60 shadow-sm rounded-full flex items-center gap-1 py-1.5 px-2 overflow-x-auto [scrollbar-width:none] pointer-events-auto max-w-full ml-2"
+              >
+                {subTabs[activeTab].map((subTab) => (
+                  <button
+                    key={subTab.id}
+                    onClick={() => setActiveSubTab(subTab.id)}
+                    className={clsx(
+                      "relative px-4 py-1.5 rounded-full text-[12px] font-medium transition-all duration-200 whitespace-nowrap",
+                      activeSubTab === subTab.id
+                        ? "text-foreground bg-foreground/10"
+                        : "text-foreground/40 hover:text-foreground hover:bg-foreground/5"
+                    )}
+                  >
+                    {subTab.label}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

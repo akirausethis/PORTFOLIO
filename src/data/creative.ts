@@ -1,9 +1,10 @@
-export type CreativeCategory = "photography" | "graphic-design" | "video-editing" | "motion-design";
+export type CreativeCategory = "photography" | "video-editing" | "motion-editing";
 
 export interface CreativeWork {
   id: string;
   title: string;
   category: CreativeCategory;
+  subcategory?: string;
   image: string;
   link?: string;
   aspect?: "auto" | "portrait" | "landscape" | "square";
@@ -16,7 +17,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-1",
     title: "Azusa",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Azusa.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -24,7 +26,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-2",
     title: "Camellya",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Camellya.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -32,7 +35,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-3",
     title: "Firefly",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Firefly.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -40,7 +44,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-4",
     title: "Ganyu",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Ganyu.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -48,7 +53,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-5",
     title: "Miyabi",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Miyabi.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -56,7 +62,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-6",
     title: "Ruan",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Ruan.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -64,7 +71,8 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-7",
     title: "Silverwolf",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Silverwolf.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
@@ -72,12 +80,14 @@ export const creativeWorks: CreativeWork[] = [
   {
     id: "motion-8",
     title: "Yelan",
-    category: "motion-design",
+    category: "motion-editing",
+    subcategory: "gfx",
     image: "/creative/Motion Design/GFX/GFX - Yelan.jpg",
     year: "2024",
     tools: ["After Effects", "Photoshop"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-9",
     title: "(PORTFOLIO PURPOSES ) ADS - ConfortSculpt",
     category: "video-editing",
@@ -88,6 +98,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-10",
     title: "(PORTFOLIO PURPOSES ) ADS - AutoPump",
     category: "video-editing",
@@ -98,6 +109,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-11",
     title: "(PORTFOLIO PURPOSES ) ADS - Wellife",
     category: "video-editing",
@@ -108,6 +120,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-12",
     title: "(PORTFOLIO PURPOSES ) ADS - Titan",
     category: "video-editing",
@@ -118,6 +131,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-13",
     title: "(PORTFOLIO PURPOSES ) ADS - Pawable",
     category: "video-editing",
@@ -128,6 +142,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-14",
     title: "(PORTFOLIO PURPOSES ) ADS - Manly",
     category: "video-editing",
@@ -138,6 +153,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-15",
     title: "(PORTFOLIO PURPOSES ) ADS - Drops",
     category: "video-editing",
@@ -148,6 +164,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "ads",
     id: "video-ads-16",
     title: "(PORTFOLIO PURPOSES ) ADS - DirectMeds",
     category: "video-editing",
@@ -158,6 +175,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro", "CapCut"],
   },
   {
+    subcategory: "recap",
     id: "video-recap-17",
     title: "(PORTFOLIO PURPOSES) RECAP - Insight Design",
     category: "video-editing",
@@ -168,6 +186,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro"],
   },
   {
+    subcategory: "recap",
     id: "video-recap-18",
     title: "(PORTFOLIO PURPOSES) RECAP - Academic Odyssey",
     category: "video-editing",
@@ -178,6 +197,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro"],
   },
   {
+    subcategory: "recap",
     id: "video-recap-19",
     title: "(PORTFOLIO PURPOSES) RECAP - Inauguration Night",
     category: "video-editing",
@@ -188,6 +208,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro"],
   },
   {
+    subcategory: "recap",
     id: "video-recap-20",
     title: "(PORTFOLIO PURPOSES) RECAP - Red Carpet Night",
     category: "video-editing",
@@ -198,6 +219,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro"],
   },
   {
+    subcategory: "recap",
     id: "video-recap-21",
     title: "(PORTFOLIO PURPOSES) RECAP - Pulse",
     category: "video-editing",
@@ -208,6 +230,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro"],
   },
   {
+    subcategory: "recap",
     id: "video-recap-22",
     title: "(PORTFOLIO PURPOSES) RECAP - Digital Entrepreneurship",
     category: "video-editing",
@@ -218,6 +241,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Premiere Pro"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-23",
     title: "(PORTFOLIO PURPOSES) AMV - Hitori",
     category: "video-editing",
@@ -228,6 +252,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-24",
     title: "(PORTFOLIO PURPOSES) AMV - Robin",
     category: "video-editing",
@@ -238,6 +263,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-25",
     title: "(PORTFOLIO PURPOSES) AMV - Suisei",
     category: "video-editing",
@@ -248,6 +274,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-26",
     title: "(PORTFOLIO PURPOSES) AMV - Ruby",
     category: "video-editing",
@@ -258,6 +285,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-27",
     title: "(PORTFOLIO PURPOSES) AMV - Sachi",
     category: "video-editing",
@@ -268,6 +296,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-28",
     title: "(PORTFOLIO PURPOSES) AMV - Sajuna",
     category: "video-editing",
@@ -278,6 +307,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-29",
     title: "(PORTFOLIO PURPOSES) AMV - Siesta",
     category: "video-editing",
@@ -288,6 +318,7 @@ export const creativeWorks: CreativeWork[] = [
     tools: ["Alight Motion", "After Effects"],
   },
   {
+    subcategory: "amv",
     id: "video-amv-30",
     title: "(PORTFOLIO PURPOSES) AMV - Yuki",
     category: "video-editing",
@@ -301,7 +332,6 @@ export const creativeWorks: CreativeWork[] = [
 
 export const categoryLabels: Record<CreativeCategory, string> = {
   photography: "Photography",
-  "graphic-design": "Graphic Design",
   "video-editing": "Video Editing",
-  "motion-design": "Motion Design",
+  "motion-editing": "Motion Editing",
 };
