@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/providers/LenisProvider";
 import FloatingNav from "@/components/layout/FloatingNav";
+import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
 const inter = Inter({
@@ -70,6 +71,7 @@ export default function RootLayout({
           <main className="flex-1 w-full relative">
             {children}
           </main>
+          <Footer />
           <ScrollToTop />
         </LenisProvider>
       </body>

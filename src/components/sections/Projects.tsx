@@ -7,6 +7,7 @@ import { ArrowUpRight, ExternalLink } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { projectsData } from "@/data/projects";
 import DisclaimerModal from "@/components/ui/DisclaimerModal";
+import TiltCard from "@/components/ui/TiltCard";
 
 export default function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -74,13 +75,14 @@ export default function Projects() {
           className="group mb-12"
         >
           <Link href={`/work/${hero.slug}`} className="block">
-            <div className="relative w-full overflow-hidden rounded-3xl border border-border bg-foreground/5" style={{ aspectRatio: "16/7" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={hero.images[0] || "/placeholder.jpg"}
-                alt={hero.title}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                onError={(e) => {
+            <TiltCard>
+              <div className="relative w-full overflow-hidden rounded-3xl border border-border bg-foreground/5" style={{ aspectRatio: "16/7" }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={hero.images[0] || "/placeholder.jpg"}
+                  alt={hero.title}
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                  onError={(e) => {
                   (e.target as HTMLImageElement).src =
                     `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Crect fill='%23f5f5f5' width='800' height='400'/%3E%3C/svg%3E`;
                 }}
@@ -96,6 +98,7 @@ export default function Projects() {
                 01
               </div>
             </div>
+          </TiltCard>
 
             <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mt-7">
               <div className="flex-1">
@@ -112,7 +115,7 @@ export default function Projects() {
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="p-3 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors"
+                    className="p-3 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors relative z-10"
                   >
                     <ExternalLink className="w-4 h-4" />
                   </a>
@@ -120,7 +123,7 @@ export default function Projects() {
                 {hero.links.github && (
                   <button
                     onClick={(e) => handleSourceCodeClick(e, hero.links.github as string)}
-                    className="p-3 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors"
+                    className="p-3 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors relative z-10"
                   >
                     <SiGithub className="w-4 h-4" />
                   </button>
@@ -129,7 +132,7 @@ export default function Projects() {
             </div>
 
             {/* Tech tags */}
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-4 relative z-10">
               {[...(hero.technologies.frontend ?? []), ...(hero.technologies.backend ?? [])].map((t) => (
                 <span key={t} className="text-xs px-3 py-1.5 rounded-full border border-border text-foreground/55 font-medium">
                   {t}
@@ -160,27 +163,29 @@ export default function Projects() {
               >
                 <Link href={`/work/${project.slug}`} className="block">
                   {/* Image */}
-                  <div className="relative w-full overflow-hidden rounded-2xl border border-border bg-foreground/5 mb-6" style={{ aspectRatio: "4/3" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={project.images[0] || "/placeholder.jpg"}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src =
-                          `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 600'%3E%3Crect fill='%23f5f5f5' width='800' height='600'/%3E%3C/svg%3E`;
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-center justify-center">
-                      <span className="flex items-center gap-2 text-xs font-medium tracking-widest uppercase border border-foreground text-foreground px-5 py-2.5 rounded-full bg-background/80">
-                        Case Study <ArrowUpRight className="w-3.5 h-3.5" />
-                      </span>
+                  <TiltCard>
+                    <div className="relative w-full overflow-hidden rounded-2xl border border-border bg-foreground/5 mb-6" style={{ aspectRatio: "4/3" }}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={project.images[0] || "/placeholder.jpg"}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src =
+                            `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 600'%3E%3Crect fill='%23f5f5f5' width='800' height='600'/%3E%3C/svg%3E`;
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-background/50 opacity-0 group-hover:opacity-100 transition-all duration-400 flex items-center justify-center">
+                        <span className="flex items-center gap-2 text-xs font-medium tracking-widest uppercase border border-foreground text-foreground px-5 py-2.5 rounded-full bg-background/80">
+                          Case Study <ArrowUpRight className="w-3.5 h-3.5" />
+                        </span>
+                      </div>
+                      {/* Index badge */}
+                      <div className="absolute top-4 left-4 w-9 h-9 rounded-full bg-background/90 border border-border flex items-center justify-center text-xs font-mono text-foreground/50">
+                        {String(index + 1).padStart(2, "0")}
+                      </div>
                     </div>
-                    {/* Index badge */}
-                    <div className="absolute top-4 left-4 w-9 h-9 rounded-full bg-background/90 border border-border flex items-center justify-center text-xs font-mono text-foreground/50">
-                      {String(index + 1).padStart(2, "0")}
-                    </div>
-                  </div>
+                  </TiltCard>
 
                   {/* Meta row */}
                   <div className="flex items-start justify-between gap-4">

@@ -1,14 +1,32 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { ArrowUpRight, ArrowDown, MapPin } from "lucide-react";
 import { SiGithub, SiNextdotjs, SiReact, SiTypescript } from "@icons-pack/react-simple-icons";
+import Magnetic from "@/components/ui/Magnetic";
 
 const roles = ["Software Engineer", "Frontend Developer", "AI Integrator"];
 
+// Staggered character animation helper
+const AnimatedName = ({ text }: { text: string }) => (
+  <span aria-label={text}>
+    {text.split("").map((char, i) => (
+      <motion.span
+        key={i}
+        initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.6, delay: 0.3 + i * 0.035, ease: [0.16, 1, 0.3, 1] }}
+        style={{ display: char === " " ? "inline" : "inline-block" }}
+      >
+        {char === " " ? "\u00A0" : char}
+      </motion.span>
+    ))}
+  </span>
+);
+
 export default function Hero() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -26,12 +44,24 @@ export default function Hero() {
     return () => clearInterval(t);
   }, []);
 
+  // Spotlight
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const el = containerRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty("--spotlight-x", `${e.clientX - rect.left}px`);
+    el.style.setProperty("--spotlight-y", `${e.clientY - rect.top}px`);
+  }, []);
+
   return (
     <section
       id="home"
       ref={containerRef}
-      className="relative w-full min-h-screen pt-24 md:pt-32 pb-12 overflow-hidden flex flex-col"
+      onMouseMove={handleMouseMove}
+      className="spotlight-section relative w-full min-h-screen pt-24 md:pt-32 pb-12 overflow-hidden flex flex-col"
     >
+      {/* Big background section number */}
+      <span className="section-number right-6 top-24 hidden xl:block">01</span>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full flex-1 flex flex-col lg:flex-row relative">
 
         {/* ── RIGHT COLUMN: Portrait ── */}
@@ -140,14 +170,17 @@ export default function Hero() {
             </motion.div>
 
             {/* Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
-              className="font-heading text-[56px] sm:text-[72px] md:text-[88px] lg:text-[110px] font-bold tracking-tight mb-6 text-foreground leading-[0.9]"
-            >
-              Kelvin<br />Marcello<span className="text-foreground/20">.</span>
-            </motion.h1>
+            <h1 className="font-heading text-[56px] sm:text-[72px] md:text-[88px] lg:text-[110px] font-bold tracking-tight mb-6 text-foreground leading-[0.9]">
+              <AnimatedName text="Kelvin" />
+              <br />
+              <AnimatedName text="Marcello" />
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.2, duration: 0.5 }}
+                className="text-foreground/20"
+              >.</motion.span>
+            </h1>
 
             {/* Tagline */}
             <motion.p
@@ -167,21 +200,25 @@ export default function Hero() {
               className="flex flex-col space-y-4 mb-12"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <a
-                  href="#projects"
-                  className="group inline-flex items-center justify-center gap-2 text-[15px] font-semibold px-8 py-4 bg-foreground text-background rounded-full hover:bg-foreground/85 transition-all duration-300 active:scale-[0.98] w-full sm:w-auto"
-                >
-                  <span>Explore Work</span>
-                  <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-                <a
-                  href="/CV.pdf"
-                  target="_blank"
-                  download
-                  className="inline-flex items-center justify-center gap-2 text-[15px] font-medium px-8 py-4 border-2 border-border/80 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-300 active:scale-[0.98] w-full sm:w-auto text-foreground"
-                >
-                  Download CV
-                </a>
+                <Magnetic>
+                  <a
+                    href="#projects"
+                    className="group inline-flex items-center justify-center gap-2 text-[15px] font-semibold px-8 py-4 bg-foreground text-background rounded-full hover:bg-foreground/85 transition-all duration-300 w-full sm:w-auto"
+                  >
+                    <span>Explore Work</span>
+                    <ArrowUpRight className="w-4 h-4 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                </Magnetic>
+                <Magnetic>
+                  <a
+                    href="/CV.pdf"
+                    target="_blank"
+                    download
+                    className="inline-flex items-center justify-center gap-2 text-[15px] font-medium px-8 py-4 border-2 border-border/80 rounded-full hover:border-foreground/40 hover:bg-foreground/5 transition-all duration-300 w-full sm:w-auto text-foreground"
+                  >
+                    Download CV
+                  </a>
+                </Magnetic>
               </div>
             </motion.div>
 
