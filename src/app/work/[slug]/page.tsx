@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import SourceCodeButton from "@/components/ui/SourceCodeButton";
+import ReadingProgress from "@/components/ui/ReadingProgress";
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -15,8 +16,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!project) return { title: "Project Not Found" };
 
   return {
-    title: `${project.title} — Kelvin`,
+    title: project.title,
     description: project.shortDescription,
+    openGraph: {
+      title: `${project.title} — Kelvin Marcello`,
+      description: project.shortDescription,
+      images: project.images?.[0] ? [{ url: project.images[0], width: 1200, height: 630 }] : [{ url: "/og-image.jpg" }],
+    },
   };
 }
 
@@ -36,6 +42,7 @@ export default async function ProjectDetailPage({ params }: Props) {
 
   return (
     <article className="min-h-screen bg-background text-foreground pb-32 font-sans selection:bg-foreground selection:text-background">
+      <ReadingProgress />
       
       {/* Back Button */}
       <div className="w-full pt-32 lg:pt-40 pb-8">

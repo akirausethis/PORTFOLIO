@@ -2,14 +2,24 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Send, CheckCircle2, AlertCircle, Loader2, MessageCircle, Mail } from "lucide-react";
+import { ArrowUpRight, Send, CheckCircle2, AlertCircle, Loader2, MessageCircle, Mail, Copy, Check } from "lucide-react";
 import { SiInstagram, SiGithub } from "@icons-pack/react-simple-icons";
+
+const EMAIL = "akirabusinessinq@gmail.com";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyEmail = () => {
+    navigator.clipboard.writeText(EMAIL).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,16 +126,32 @@ export default function Contact() {
             <div>
               <h3 className="text-xs font-semibold tracking-[0.1em] text-foreground/50 uppercase mb-6">Direct Contact</h3>
               <div className="space-y-6">
-                <a href="mailto:akirabusinessinq@gmail.com" className="group flex items-center justify-between p-4 border border-border rounded-2xl hover:bg-foreground/[0.02] transition-colors">
-                  <div className="flex items-center space-x-4">
+                <div className="group flex items-center justify-between p-4 border border-border rounded-2xl hover:bg-foreground/[0.02] transition-colors">
+                  <a href={`mailto:${EMAIL}`} className="flex items-center space-x-4 flex-1">
                     <div className="p-3 bg-foreground/5 rounded-full text-foreground"><Mail className="w-5 h-5" /></div>
                     <div>
                       <p className="font-medium text-foreground">Email</p>
-                      <p className="text-sm text-foreground/60">akirabusinessinq@gmail.com</p>
+                      <p className="text-sm text-foreground/60">{EMAIL}</p>
                     </div>
-                  </div>
-                  <ArrowUpRight className="w-5 h-5 text-foreground/40 group-hover:text-foreground transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-all" />
-                </a>
+                  </a>
+                  <button
+                    onClick={copyEmail}
+                    className="ml-3 w-9 h-9 flex items-center justify-center rounded-full border border-border text-foreground/40 hover:text-foreground hover:border-foreground/30 hover:bg-foreground/5 transition-all shrink-0"
+                    title={copied ? "Copied!" : "Copy email"}
+                  >
+                    <AnimatePresence mode="wait">
+                      {copied ? (
+                        <motion.span key="check" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.5, opacity: 0 }} transition={{ duration: 0.15 }}>
+                          <Check className="w-4 h-4 text-emerald-500" />
+                        </motion.span>
+                      ) : (
+                        <motion.span key="copy" initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.5, opacity: 0 }} transition={{ duration: 0.15 }}>
+                          <Copy className="w-4 h-4" />
+                        </motion.span>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                </div>
 
                 <a href="https://wa.me/6282336007731" target="_blank" rel="noreferrer" className="group flex items-center justify-between p-4 border border-border rounded-2xl hover:bg-foreground/[0.02] transition-colors">
                   <div className="flex items-center space-x-4">
