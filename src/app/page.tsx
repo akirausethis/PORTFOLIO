@@ -1,8 +1,9 @@
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
-import Skills from "@/components/sections/Skills";
+import HowIWork from "@/components/sections/HowIWork";
 import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
+import Skills from "@/components/sections/Skills";
 import Creative from "@/components/sections/Creative";
 import Comments from "@/components/sections/Comments";
 import Contact from "@/components/sections/Contact";
@@ -12,6 +13,7 @@ export default function Home() {
     <div className="flex flex-col w-full">
       <div><Hero /></div>
       <div><About /></div>
+      <div><HowIWork /></div>
       <div><Projects /></div>
       <div><Experience /></div>
       <div><Skills /></div>
