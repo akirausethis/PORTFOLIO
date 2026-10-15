@@ -83,11 +83,24 @@ export default async function ProjectDetailPage({ params }: Props) {
             </div>
             <div className="p-6 md:p-8 border-r border-b border-border flex flex-col justify-between min-h-[140px]">
               <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-foreground/40 mb-4">Links</p>
-              {project.links.github ? (
-                <SourceCodeButton url={project.links.github} />
-              ) : (
-                <span className="text-lg font-medium text-foreground/40 tracking-tight">N/A</span>
-              )}
+              <div className="flex flex-wrap items-center gap-2">
+                {project.links.demo && (
+                  <a
+                    href={project.links.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-foreground text-background text-xs font-semibold hover:bg-foreground/85 transition-all shadow-sm"
+                  >
+                    <span>Live Demo</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                )}
+                {project.links.github ? (
+                  <SourceCodeButton url={project.links.github} />
+                ) : !project.links.demo && (
+                  <span className="text-lg font-medium text-foreground/40 tracking-tight">N/A</span>
+                )}
+              </div>
             </div>
           </div>
         </header>

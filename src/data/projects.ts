@@ -27,6 +27,35 @@ export type Project = {
 
 export const projectsData: Project[] = [
   {
+    slug: "aurora",
+    title: "AURORA",
+    category: "Medical-Grade E-Commerce",
+    shortDescription: "An ultra-premium clinical e-commerce experience for medical-grade phototherapy wellness technology with fluid purchasing flows.",
+    year: "2026",
+    role: "Full-Stack Developer",
+    technologies: {
+      frontend: ["React", "TypeScript", "Tailwind CSS"],
+      backend: ["Node.js"],
+      apis: ["Vercel Edge"],
+    },
+    images: ["/projects/aurora.jpg"],
+    problem: "High-end clinical wellness devices often suffer from sterile or dated interfaces that fail to inspire customer trust or communicate luxury aesthetic standards.",
+    solution: "Engineered AURORA Clinical, an editorial e-commerce experience blending medical-grade credibility with luxury minimalism, responsive interactions, and an intuitive purchasing flow.",
+    architecture: "Lightweight and blazing-fast client architecture built with React and Tailwind CSS, featuring bespoke typography, dynamic cart management, and seamless mobile responsiveness.",
+    features: [
+      "Clinical phototherapy product showcase & interactive visualizer",
+      "Slide-over cart drawer with real-time order calculation",
+      "Editorial design system with luxury typography",
+      "Fully responsive, mobile-optimized checkout workflow"
+    ],
+    challenges: "Balancing detailed clinical data and dual-wavelength specifications with high-fashion aesthetics without cluttering the buyer's journey.",
+    results: "Launched a high-converting, visually striking digital storefront deployed globally on Vercel with near-instant page transitions.",
+    insights: "In luxury e-commerce, subtle micro-interactions, responsive typography, and tactile button states directly enhance consumer confidence.",
+    links: {
+      demo: "https://aurora-ecommerce-demo.vercel.app/"
+    }
+  },
+  {
     slug: "lumora",
     title: "LUMORA",
     category: "Freelance & E-Commerce",

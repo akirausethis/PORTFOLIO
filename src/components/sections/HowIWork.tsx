@@ -178,7 +178,7 @@ export default function HowIWork() {
           </motion.div>
         </div>
 
-        {/* ── Interactive Step Tracker / Timeline Ribbon (Desktop) ── */}
+        {/* ── Interactive Step Tracker / Timeline Ribbon (Desktop & Tablet) ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -188,7 +188,6 @@ export default function HowIWork() {
         >
           {steps.map((step, idx) => {
             const isHovered = activeStep === idx;
-            const Icon = step.icon;
             return (
               <button
                 key={step.number}
@@ -201,7 +200,7 @@ export default function HowIWork() {
                 }}
                 onMouseEnter={() => setActiveStep(idx)}
                 onMouseLeave={() => setActiveStep(null)}
-                className={`flex-1 flex items-center justify-center gap-3 py-3 px-4 rounded-xl border transition-all duration-300 group ${
+                className={`flex-1 flex items-center justify-center gap-3 py-3 px-3 rounded-xl border transition-all duration-300 group ${
                   isHovered
                     ? "bg-foreground text-background border-foreground shadow-md"
                     : "bg-transparent text-foreground/60 border-transparent hover:border-border hover:bg-foreground/[0.03] hover:text-foreground"
@@ -238,12 +237,47 @@ export default function HowIWork() {
           })}
         </motion.div>
 
-        {/* ── Steps Grid ── */}
-        {/* Row 1: Steps 01, 02, 03 (3 Columns) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          {steps.slice(0, 3).map((step, idx) => {
+        {/* ── Mobile Step Pills Ribbon (Phone) ── */}
+        <div className="flex md:hidden items-center gap-2 overflow-x-auto pb-4 mb-8 -mx-6 px-6 no-scrollbar">
+          {steps.map((step, idx) => (
+            <button
+              key={step.number}
+              onClick={() => {
+                setActiveStep(activeStep === idx ? null : idx);
+                const el = document.getElementById(`step-${step.number}`);
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+              }}
+              className={`shrink-0 flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-mono transition-all ${
+                activeStep === idx
+                  ? "bg-foreground text-background border-foreground font-bold shadow-sm"
+                  : "border-border bg-foreground/[0.02] text-foreground/60"
+              }`}
+            >
+              <span>{step.number}</span>
+              <span className="font-heading font-medium text-[11px]">{step.title.split(" ")[0]}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* ── Steps Grid (Unified 6-column system for seamless phone, tablet & desktop layout) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-16">
+          {steps.map((step, idx) => {
             const isHighlighted = activeStep === idx;
             const Icon = step.icon;
+
+            // Responsive span rules:
+            // - Mobile: 1 col (full width)
+            // - Tablet (md): Step 01-04 take 1 col (2 per row); Step 05 takes md:col-span-2 (spans full width!)
+            // - Desktop (lg): Step 01-03 take lg:col-span-2 (1/3 each = 6 cols); Step 04-05 take lg:col-span-3 (1/2 each = 6 cols)
+            const spanClass =
+              idx < 3
+                ? "md:col-span-1 lg:col-span-2"
+                : idx === 3
+                ? "md:col-span-1 lg:col-span-3"
+                : "md:col-span-2 lg:col-span-3";
+
             return (
               <motion.div
                 key={step.number}
@@ -251,33 +285,33 @@ export default function HowIWork() {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 onMouseEnter={() => setActiveStep(idx)}
                 onMouseLeave={() => setActiveStep(null)}
-                className={`group relative rounded-3xl border p-8 flex flex-col justify-between transition-all duration-500 overflow-hidden ${
+                className={`group relative rounded-3xl border p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 overflow-hidden ${spanClass} ${
                   isHighlighted
-                    ? "border-foreground/50 bg-foreground/[0.035] shadow-[0_12px_40px_rgb(0,0,0,0.08)] scale-[1.01]"
+                    ? "border-foreground/50 bg-foreground/[0.035] shadow-[0_12px_40px_rgb(0,0,0,0.08)] scale-[1.008]"
                     : "border-border bg-foreground/[0.015] hover:border-foreground/30 hover:bg-foreground/[0.025]"
                 }`}
               >
                 {/* Background watermark number */}
-                <span className="absolute top-4 right-6 text-7xl font-heading font-bold text-foreground/[0.03] select-none pointer-events-none group-hover:text-foreground/[0.06] transition-colors duration-500">
+                <span className="absolute top-3 right-5 text-6xl sm:text-7xl lg:text-8xl font-heading font-bold text-foreground/[0.03] select-none pointer-events-none group-hover:text-foreground/[0.06] transition-colors duration-500 -z-0">
                   {step.number}
                 </span>
 
-                <div>
+                <div className="relative z-10">
                   {/* Top row: Phase pill + Icon */}
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between mb-5">
                     <span className="text-[11px] font-mono tracking-widest uppercase font-semibold text-foreground/50 border border-border px-3 py-1 rounded-full bg-foreground/[0.02]">
                       {step.phase}
                     </span>
-                    <div className="w-12 h-12 rounded-2xl border border-border bg-foreground/[0.03] flex items-center justify-center group-hover:border-foreground/40 group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl border border-border bg-foreground/[0.03] flex items-center justify-center group-hover:border-foreground/40 group-hover:bg-foreground group-hover:text-background transition-all duration-300">
                       <Icon className="w-5 h-5 transition-colors" strokeWidth={1.5} />
                     </div>
                   </div>
 
                   {/* Title & Tagline */}
-                  <h3 className="text-2xl font-heading font-semibold text-foreground tracking-tight mb-2 group-hover:text-foreground/90">
+                  <h3 className="text-xl sm:text-2xl font-heading font-semibold text-foreground tracking-tight mb-1.5 group-hover:text-foreground/90">
                     {step.title}
                   </h3>
                   <p className="text-xs font-mono text-foreground/40 uppercase tracking-wider mb-4">
@@ -290,9 +324,9 @@ export default function HowIWork() {
                   </p>
 
                   {/* Key Activities Checklist */}
-                  <div className="space-y-2.5 mb-8 pt-4 border-t border-border/60">
+                  <div className={`gap-2.5 mb-7 pt-4 border-t border-border/60 ${idx >= 3 ? "grid grid-cols-1 sm:grid-cols-2" : "space-y-2.5"}`}>
                     {step.details.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-foreground/65 font-light">
+                      <div key={i} className="flex items-start gap-2 text-xs text-foreground/65 font-light">
                         <CheckCircle2 className="w-3.5 h-3.5 text-foreground/30 shrink-0 mt-0.5 group-hover:text-foreground/70 transition-colors" />
                         <span>{item}</span>
                       </div>
@@ -301,8 +335,8 @@ export default function HowIWork() {
                 </div>
 
                 {/* Bottom: Deliverables pills */}
-                <div className="pt-4 border-t border-border/60">
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 mb-2.5">
+                <div className="pt-4 border-t border-border/60 relative z-10">
+                  <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 mb-2">
                     Key Outputs
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -321,96 +355,13 @@ export default function HowIWork() {
           })}
         </div>
 
-        {/* Row 2: Steps 04 and 05 (2 Wide Columns) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          {steps.slice(3, 5).map((step, idx) => {
-            const actualIdx = idx + 3;
-            const isHighlighted = activeStep === actualIdx;
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.number}
-                id={`step-${step.number}`}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.3 + idx * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                onMouseEnter={() => setActiveStep(actualIdx)}
-                onMouseLeave={() => setActiveStep(null)}
-                className={`group relative rounded-3xl border p-8 lg:p-10 flex flex-col justify-between transition-all duration-500 overflow-hidden ${
-                  isHighlighted
-                    ? "border-foreground/50 bg-foreground/[0.035] shadow-[0_12px_40px_rgb(0,0,0,0.08)] scale-[1.01]"
-                    : "border-border bg-foreground/[0.015] hover:border-foreground/30 hover:bg-foreground/[0.025]"
-                }`}
-              >
-                {/* Background watermark number */}
-                <span className="absolute top-4 right-8 text-8xl font-heading font-bold text-foreground/[0.03] select-none pointer-events-none group-hover:text-foreground/[0.06] transition-colors duration-500">
-                  {step.number}
-                </span>
-
-                <div>
-                  {/* Top row: Phase pill + Icon */}
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-[11px] font-mono tracking-widest uppercase font-semibold text-foreground/50 border border-border px-3 py-1 rounded-full bg-foreground/[0.02]">
-                      {step.phase}
-                    </span>
-                    <div className="w-14 h-14 rounded-2xl border border-border bg-foreground/[0.03] flex items-center justify-center group-hover:border-foreground/40 group-hover:bg-foreground group-hover:text-background transition-all duration-300">
-                      <Icon className="w-6 h-6 transition-colors" strokeWidth={1.5} />
-                    </div>
-                  </div>
-
-                  {/* Title & Tagline */}
-                  <h3 className="text-2xl md:text-3xl font-heading font-semibold text-foreground tracking-tight mb-2 group-hover:text-foreground/90">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs font-mono text-foreground/40 uppercase tracking-wider mb-4">
-                    {step.tagline}
-                  </p>
-
-                  {/* Description */}
-                  <p className="text-sm md:text-base text-foreground/60 font-light leading-relaxed mb-6 max-w-xl">
-                    {step.description}
-                  </p>
-
-                  {/* Key Activities Checklist (2 columns on medium screens) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-8 pt-4 border-t border-border/60">
-                    {step.details.map((item, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-foreground/65 font-light">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-foreground/30 shrink-0 mt-0.5 group-hover:text-foreground/70 transition-colors" />
-                        <span>{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Bottom: Deliverables pills */}
-                <div className="pt-4 border-t border-border/60">
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-foreground/40 mb-2.5">
-                    Key Outputs & Standards
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {step.deliverables.map((deliv, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-3 py-1.5 rounded-lg border border-border bg-foreground/[0.02] text-foreground/60 font-medium"
-                      >
-                        {deliv}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
         {/* ── Callout Banner / Next Step ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="rounded-3xl border border-border bg-foreground/[0.02] p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6"
+          className="rounded-3xl border border-border bg-foreground/[0.02] p-6 sm:p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between gap-6"
         >
           <div>
             <div className="flex items-center gap-2 mb-2">
@@ -419,7 +370,7 @@ export default function HowIWork() {
                 Ready to collaborate
               </span>
             </div>
-            <h4 className="text-2xl font-heading font-semibold text-foreground tracking-tight">
+            <h4 className="text-xl sm:text-2xl font-heading font-semibold text-foreground tracking-tight">
               Have an idea you want planned, designed, and executed?
             </h4>
             <p className="text-sm text-foreground/50 font-light mt-1">
@@ -427,17 +378,17 @@ export default function HowIWork() {
             </p>
           </div>
 
-          <div className="flex items-center gap-4 shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
             <Link
               href="#contact"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-foreground text-background font-medium text-sm hover:opacity-90 transition-opacity tracking-wide"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-foreground text-background font-medium text-sm hover:opacity-90 transition-opacity tracking-wide"
             >
               Start a Project
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               href="#projects"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-border text-foreground font-medium text-sm hover:bg-foreground/[0.03] transition-colors tracking-wide"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-border text-foreground font-medium text-sm hover:bg-foreground/[0.03] transition-colors tracking-wide"
             >
               See Case Studies
             </Link>

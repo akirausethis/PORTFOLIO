@@ -64,37 +64,48 @@ export default function Hero() {
       <span className="section-number right-6 top-24 hidden xl:block">01</span>
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 w-full flex-1 flex flex-col lg:flex-row relative">
 
-        {/* ── RIGHT COLUMN: Portrait ── */}
-        <div className="w-full lg:w-[55%] relative z-0 flex items-center justify-center lg:h-full order-1 lg:order-2 mt-8 lg:mt-0 overflow-hidden lg:overflow-visible rounded-b-3xl lg:rounded-none">
-          <motion.div style={{ y: yRight, opacity: imgOpacity }} className="relative w-full h-[350px] sm:h-[450px] lg:h-full flex items-center justify-center">
+        {/* ── RIGHT COLUMN: Portrait & Orbital Ring ── */}
+        <div className="w-full lg:w-[55%] relative z-0 flex items-center justify-center lg:h-full order-1 lg:order-2 mt-4 lg:mt-0 overflow-visible rounded-b-3xl lg:rounded-none">
+          <motion.div style={{ y: yRight, opacity: imgOpacity }} className="relative w-full h-[380px] sm:h-[460px] md:h-[520px] lg:h-full flex items-center justify-center">
 
-            {/* Background circle */}
+            {/* Background ambient circle */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="absolute w-[250px] h-[250px] sm:w-[350px] sm:h-[350px] lg:right-12 lg:w-[600px] lg:h-[600px] bg-foreground/[0.03] rounded-full z-0"
+              className="absolute left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-12 w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] md:w-[420px] md:h-[420px] lg:w-[600px] lg:h-[600px] bg-foreground/[0.03] rounded-full z-0 pointer-events-none"
             />
 
-            {/* Subtle orbit ring with orbiting nodes — desktop only */}
+            {/* Inner celestial dotted orbit ring */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.8, delay: 0.3, ease: "easeOut" }}
+              className="absolute left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-12 w-[290px] h-[290px] sm:w-[380px] sm:h-[380px] md:w-[470px] md:h-[470px] lg:w-[560px] lg:h-[560px] rounded-full border border-dotted border-foreground/10 z-0 pointer-events-none"
+            >
+              <div className="absolute top-[20%] right-[15%] w-1.5 h-1.5 rounded-full bg-foreground/20" />
+              <div className="absolute bottom-[25%] left-[10%] w-1.5 h-1.5 rounded-full bg-foreground/20" />
+            </motion.div>
+
+            {/* Outer dynamic dashed orbit ring with orbiting nodes — visible on ALL devices */}
             <motion.div
               style={{ rotate: ringRotate }}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 2, delay: 0.5, ease: "easeOut" }}
-              className="hidden lg:block absolute right-12 w-[680px] h-[680px] rounded-full border border-dashed border-foreground/15 z-0"
+              className="absolute left-1/2 -translate-x-1/2 lg:left-auto lg:translate-x-0 lg:right-12 w-[340px] h-[340px] sm:w-[440px] sm:h-[440px] md:w-[540px] md:h-[540px] lg:w-[680px] lg:h-[680px] rounded-full border border-dashed border-foreground/15 z-0"
             >
               {/* Node 1: React */}
-              <div className="absolute top-[10%] left-[10%] w-12 h-12 bg-background border border-border rounded-full flex items-center justify-center shadow-sm -translate-x-1/2 -translate-y-1/2">
-                <SiReact className="w-5 h-5 text-foreground/40" />
+              <div className="absolute top-[12%] left-[10%] w-9 h-9 sm:w-11 sm:h-11 lg:w-12 lg:h-12 bg-background border border-border rounded-full flex items-center justify-center shadow-sm -translate-x-1/2 -translate-y-1/2">
+                <SiReact className="w-4 h-4 sm:w-5 sm:h-5 text-foreground/50" />
               </div>
               {/* Node 2: Next.js */}
-              <div className="absolute top-[10%] right-[10%] w-14 h-14 bg-background border border-border rounded-full flex items-center justify-center shadow-sm translate-x-1/2 -translate-y-1/2">
-                <SiNextdotjs className="w-6 h-6 text-foreground/40" />
+              <div className="absolute top-[12%] right-[10%] w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 bg-background border border-border rounded-full flex items-center justify-center shadow-sm translate-x-1/2 -translate-y-1/2">
+                <SiNextdotjs className="w-5 h-5 sm:w-6 sm:h-6 text-foreground/50" />
               </div>
               {/* Node 3: TypeScript */}
-              <div className="absolute bottom-[5%] left-[25%] w-10 h-10 bg-background border border-border rounded-full flex items-center justify-center shadow-sm -translate-x-1/2 translate-y-1/2">
-                <SiTypescript className="w-4 h-4 text-foreground/40" />
+              <div className="absolute bottom-[8%] left-[22%] w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 bg-background border border-border rounded-full flex items-center justify-center shadow-sm -translate-x-1/2 translate-y-1/2">
+                <SiTypescript className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-foreground/50" />
               </div>
             </motion.div>
 
@@ -103,7 +114,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="relative z-10 w-[250px] h-[350px] sm:w-[350px] sm:h-[450px] lg:w-[600px] lg:h-[800px] flex items-end justify-center lg:translate-x-12 lg:translate-y-12"
+              className="relative z-10 w-[240px] h-[340px] sm:w-[320px] sm:h-[420px] md:w-[380px] md:h-[480px] lg:w-[600px] lg:h-[800px] flex items-end justify-center lg:translate-x-12 lg:translate-y-12"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -111,13 +122,13 @@ export default function Hero() {
                 alt="Kelvin Marcello"
                 className="w-full h-full object-contain object-bottom pointer-events-none"
                 style={{
-                  maskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
-                  WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
+                  maskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 65%, transparent 100%)",
                 }}
               />
             </motion.div>
 
-            {/* Floating status card — desktop only */}
+            {/* Floating status card — desktop */}
             <motion.div
               initial={{ opacity: 0, x: -20, y: 10 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
@@ -132,10 +143,22 @@ export default function Hero() {
                 <p className="text-xs text-foreground/50 font-medium tracking-wide">Internship · Full-time</p>
               </div>
             </motion.div>
+
+            {/* Floating status pill — phone & tablet */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="flex lg:hidden absolute bottom-1 left-1/2 -translate-x-1/2 items-center gap-2 px-4 py-2 bg-background/90 backdrop-blur-md border border-border/80 rounded-full shadow-[0_4px_20px_rgb(0,0,0,0.04)] z-20 whitespace-nowrap"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-semibold text-foreground/80 tracking-wide">Available for work</span>
+              <span className="text-[10px] text-foreground/40 font-mono">· Surabaya</span>
+            </motion.div>
           </motion.div>
 
           {/* Mobile gradient fade */}
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent z-20 lg:hidden pointer-events-none" />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background to-transparent z-10 lg:hidden pointer-events-none" />
         </div>
 
         {/* ── LEFT COLUMN: Content ── */}

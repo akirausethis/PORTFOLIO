@@ -121,8 +121,21 @@ export default function FloatingNav() {
             </Link>
           </div>
 
-          {/* ── Mobile Hamburger ── */}
-          <div className="lg:hidden flex items-center relative z-50">
+          {/* ── Mobile Actions: Dedicated Creative Button + Hamburger ── */}
+          <div className="lg:hidden flex items-center gap-2 relative z-50">
+            <Link
+              href="/creative"
+              className={clsx(
+                "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all duration-300",
+                isScrolled && !isMobileMenuOpen
+                  ? "border-border/60 bg-foreground/5 text-foreground hover:bg-foreground hover:text-background"
+                  : "border-border/60 bg-background/80 backdrop-blur-md text-foreground hover:bg-foreground hover:text-background"
+              )}
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Creative</span>
+            </Link>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={clsx(
@@ -157,8 +170,31 @@ export default function FloatingNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-xl flex flex-col px-6 md:px-12 pt-28 pb-12"
+            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-xl flex flex-col px-6 md:px-12 pt-28 pb-12 overflow-y-auto"
           >
+            {/* Dedicated Creative Feature Card in Mobile Menu */}
+            <div className="mb-4">
+              <Link
+                href="/creative"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="group relative flex items-center justify-between p-4 rounded-2xl border border-border bg-foreground/[0.03] hover:border-foreground/30 hover:bg-foreground/[0.06] transition-all duration-300"
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-foreground text-background flex items-center justify-center shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-heading font-bold text-lg text-foreground">Creative</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-foreground/10 text-foreground/70 font-semibold uppercase">Featured</span>
+                    </div>
+                    <p className="text-xs text-foreground/50">Photography, Design & Film</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="w-5 h-5 text-foreground/40 group-hover:text-foreground group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+              </Link>
+            </div>
+
             {/* Nav list */}
             <nav className="flex flex-col divide-y divide-border/50">
               {navItems.map((item, i) => {

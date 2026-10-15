@@ -115,15 +115,17 @@ export default function Projects() {
                     target="_blank"
                     rel="noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="p-3 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors relative z-10"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-xs font-semibold hover:bg-foreground/85 transition-all shadow-sm relative z-10"
                   >
-                    <ExternalLink className="w-4 h-4" />
+                    <span>Live Demo</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 )}
                 {hero.links.github && (
                   <button
                     onClick={(e) => handleSourceCodeClick(e, hero.links.github as string)}
                     className="p-3 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors relative z-10"
+                    title="View Source Code"
                   >
                     <SiGithub className="w-4 h-4" />
                   </button>
@@ -196,22 +198,25 @@ export default function Projects() {
                       </h3>
                       <p className="text-foreground/55 font-light text-sm mt-2 leading-relaxed">{project.shortDescription}</p>
                     </div>
-                    <div className="flex flex-col gap-2 shrink-0">
+                    <div className="flex items-center gap-2 shrink-0">
                       {project.links.demo && (
                         <a
                           href={project.links.demo}
                           target="_blank"
                           rel="noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="p-2.5 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground text-background text-xs font-medium hover:bg-foreground/85 transition-all relative z-10"
+                          title="View Live Demo"
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
+                          <span>Demo</span>
+                          <ExternalLink className="w-3 h-3" />
                         </a>
                       )}
                       {project.links.github && (
                         <button
                           onClick={(e) => handleSourceCodeClick(e, project.links.github as string)}
-                          className="p-2.5 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors"
+                          className="p-2.5 border border-border rounded-full hover:bg-foreground hover:text-background transition-colors relative z-10"
+                          title="View Source Code"
                         >
                           <SiGithub className="w-3.5 h-3.5" />
                         </button>
