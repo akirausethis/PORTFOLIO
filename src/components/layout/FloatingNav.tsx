@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import clsx from "clsx";
 import Link from "next/link";
-import { Menu, X, ArrowUpRight, Briefcase, User, GraduationCap, MessageSquare, Sparkles } from "lucide-react";
+import { Menu, X, ArrowUpRight, Briefcase, User, GraduationCap, MessageSquare, Sparkles, Search } from "lucide-react";
 
 const navItems = [
   { name: "Work",       href: "/#projects",   description: "Projects that I did",       icon: Briefcase },
@@ -107,8 +107,21 @@ export default function FloatingNav() {
             })}
           </nav>
 
-          {/* ── Desktop Right CTA ── */}
-          <div className="hidden lg:flex items-center">
+          {/* ── Desktop Right CTA & Command Palette Trigger ── */}
+          <div className="hidden lg:flex items-center gap-2.5">
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+              className={clsx(
+                "group flex items-center gap-2 border border-border/70 rounded-full font-mono text-foreground/50 hover:text-foreground hover:border-foreground/30 hover:bg-foreground/5 transition-all duration-300",
+                isScrolled && !isMobileMenuOpen ? "px-3 py-1.5 text-xs" : "px-3.5 py-2 text-xs"
+              )}
+              title="Open Command Palette (Cmd + K)"
+            >
+              <Search className="w-3.5 h-3.5 text-foreground/40 group-hover:text-foreground" />
+              <span className="hidden xl:inline text-[11px] font-sans">Quick search</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-foreground/10 text-[10px] font-mono text-foreground/60">⌘K</kbd>
+            </button>
+
             <Link
               href="/#contact"
               className={clsx(
@@ -121,12 +134,26 @@ export default function FloatingNav() {
             </Link>
           </div>
 
-          {/* ── Mobile Actions: Dedicated Creative Button + Hamburger ── */}
+          {/* ── Mobile Actions: Search + Dedicated Creative Button + Hamburger ── */}
           <div className="lg:hidden flex items-center gap-2 relative z-50">
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+              className={clsx(
+                "flex items-center justify-center rounded-full border transition-all duration-300",
+                isScrolled && !isMobileMenuOpen
+                  ? "w-8 h-8 border-border/40 bg-foreground/5 text-foreground/70"
+                  : "w-9 h-9 border-border/60 bg-background/80 text-foreground/70 hover:text-foreground"
+              )}
+              aria-label="Open Command Palette"
+              title="Search (Cmd + K)"
+            >
+              <Search className="w-3.5 h-3.5" />
+            </button>
+
             <Link
               href="/creative"
               className={clsx(
-                "flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all duration-300",
+                "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all duration-300",
                 isScrolled && !isMobileMenuOpen
                   ? "border-border/60 bg-foreground/5 text-foreground hover:bg-foreground hover:text-background"
                   : "border-border/60 bg-background/80 backdrop-blur-md text-foreground hover:bg-foreground hover:text-background"

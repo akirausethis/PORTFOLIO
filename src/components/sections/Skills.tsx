@@ -22,6 +22,8 @@ import {
   SiPrisma,
   SiNodedotjs,
 } from "@icons-pack/react-simple-icons";
+import { ArrowUpRight, Layers } from "lucide-react";
+import { projectsData } from "@/data/projects";
 
 type Skill = {
   name: string;
@@ -150,39 +152,89 @@ export default function Skills() {
 
         {/* ── Skill grid ── */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-12">
-          {filtered.map((skill, i) => (
-            <motion.div
-              key={skill.name}
-              layout
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              transition={{ duration: 0.35, delay: i * 0.03, ease: [0.16, 1, 0.3, 1] }}
-              onMouseEnter={() => setHoveredSkill(skill.name)}
-              onMouseLeave={() => setHoveredSkill(null)}
-              className={`relative group flex flex-col items-center gap-3 p-5 rounded-2xl border transition-all duration-300 cursor-default ${
-                hoveredSkill === skill.name
-                  ? "bg-foreground text-background border-foreground shadow-xl scale-105"
-                  : "bg-transparent text-foreground border-border hover:border-foreground/30"
-              }`}
-            >
-              <skill.Icon className="w-7 h-7 shrink-0" />
-              <div className="text-center">
-                <p className={`text-sm font-semibold leading-tight ${hoveredSkill === skill.name ? "text-background" : "text-foreground"}`}>
-                  {skill.name}
-                </p>
-                {hoveredSkill === skill.name && (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-[11px] text-background/70 mt-1 leading-snug"
+          {filtered.map((skill, i) => {
+            const matchingProjects = projectsData.filter((p) => {
+              const allTech = [
+                ...(p.technologies.frontend ?? []),
+                ...(p.technologies.backend ?? []),
+                ...(p.technologies.database ?? []),
+                ...(p.technologies.apis ?? []),
+              ];
+              return allTech.some((t) => t.toLowerCase() === skill.name.toLowerCase());
+            });
+
+            const hasProjects = matchingProjects.length > 0;
+
+            return (
+              <motion.div
+                key={skill.name}
+                layout
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.35, delay: i * 0.03, ease: [0.16, 1, 0.3, 1] }}
+                onMouseEnter={() => setHoveredSkill(skill.name)}
+                onMouseLeave={() => setHoveredSkill(null)}
+                onClick={() => {
+                  if (hasProjects) {
+                    window.dispatchEvent(new CustomEvent("filter-tech", { detail: skill.name }));
+                    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+                className={`relative group flex flex-col items-center justify-between p-5 rounded-2xl border transition-all duration-300 ${
+                  hasProjects ? "cursor-pointer" : "cursor-default"
+                } ${
+                  hoveredSkill === skill.name
+                    ? "bg-foreground text-background border-foreground shadow-xl scale-105"
+                    : "bg-transparent text-foreground border-border hover:border-foreground/30"
+                }`}
+                title={hasProjects ? `Click to see ${matchingProjects.length} projects built with ${skill.name}` : skill.name}
+              >
+                {/* Related Projects Badge */}
+                {hasProjects && (
+                  <span
+                    className={`absolute top-2.5 right-2.5 text-[9px] font-mono px-1.5 py-0.5 rounded-md uppercase font-semibold transition-colors ${
+                      hoveredSkill === skill.name
+                        ? "bg-background/20 text-background"
+                        : "bg-foreground/5 text-foreground/40 border border-border/60"
+                    }`}
                   >
-                    {skill.desc}
-                  </motion.p>
+                    {matchingProjects.length}P
+                  </span>
                 )}
-              </div>
-            </motion.div>
-          ))}
+
+                <skill.Icon className="w-7 h-7 shrink-0 mt-1" />
+                <div className="text-center w-full">
+                  <p className={`text-sm font-semibold leading-tight ${hoveredSkill === skill.name ? "text-background" : "text-foreground"}`}>
+                    {skill.name}
+                  </p>
+                  {hoveredSkill === skill.name ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 3 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-1"
+                    >
+                      <p className="text-[11px] text-background/70 leading-snug">
+                        {skill.desc}
+                      </p>
+                      {hasProjects && (
+                        <p className="text-[10px] font-mono font-bold tracking-wide text-background mt-2 flex items-center justify-center gap-1 underline underline-offset-2">
+                          <span>View {matchingProjects.length} {matchingProjects.length === 1 ? "project" : "projects"}</span>
+                          <ArrowUpRight className="w-3 h-3" />
+                        </p>
+                      )}
+                    </motion.div>
+                  ) : (
+                    hasProjects && (
+                      <p className="text-[10px] font-mono text-foreground/35 mt-1">
+                        {matchingProjects.length} {matchingProjects.length === 1 ? "project" : "projects"}
+                      </p>
+                    )
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
       </div>

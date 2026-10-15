@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowUpRight, ExternalLink } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Filter, X, Sparkles } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { projectsData } from "@/data/projects";
 import DisclaimerModal from "@/components/ui/DisclaimerModal";
@@ -13,6 +13,19 @@ export default function Projects() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [selectedTech, setSelectedTech] = useState<string | null>(null);
+
+  // Listen to filter-tech event triggered from CommandPalette or Skills section
+  useEffect(() => {
+    const handleFilter = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        setSelectedTech(customEvent.detail);
+      }
+    };
+    window.addEventListener("filter-tech", handleFilter as EventListener);
+    return () => window.removeEventListener("filter-tech", handleFilter as EventListener);
+  }, []);
 
   const handleSourceCodeClick = (e: React.MouseEvent, url: string) => {
     e.preventDefault();
@@ -25,8 +38,25 @@ export default function Projects() {
     if (selectedRepo) window.open(selectedRepo, "_blank");
   };
 
-  // First project gets hero treatment, rest are in the grid
-  const [hero, ...rest] = projectsData;
+  // Filter projects by selected tech if any
+  const displayedProjects = useMemo(() => {
+    if (!selectedTech) return projectsData;
+    return projectsData.filter((p) => {
+      const allTech = [
+        ...(p.technologies.frontend ?? []),
+        ...(p.technologies.backend ?? []),
+        ...(p.technologies.database ?? []),
+        ...(p.technologies.apis ?? []),
+      ];
+      return allTech.some((t) => t.toLowerCase() === selectedTech.toLowerCase());
+    });
+  }, [selectedTech]);
+
+  const hero = displayedProjects[0] || projectsData[0];
+  const rest = displayedProjects.slice(1);
+
+  // Most common technologies across all projects for quick filtering
+  const featuredTechs = ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL", "Firebase"];
 
   return (
     <section id="projects" className="py-32 w-full bg-background border-t border-border">
@@ -66,8 +96,90 @@ export default function Projects() {
           </motion.p>
         </div>
 
+        {/* ── Technology Filter Bar (Interactive Skills Linker) ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center gap-2 mb-12 p-3 sm:p-4 rounded-2xl border border-border bg-foreground/[0.015]"
+        >
+          <span className="text-xs font-mono uppercase tracking-widest text-foreground/40 mr-1.5 flex items-center gap-1.5 pl-1">
+            <Filter className="w-3.5 h-3.5" />
+            <span>Filter Tech:</span>
+          </span>
+
+          <button
+            onClick={() => setSelectedTech(null)}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+              selectedTech === null
+                ? "bg-foreground text-background font-semibold shadow-sm"
+                : "border border-border text-foreground/60 hover:text-foreground hover:border-foreground/30 bg-background"
+            }`}
+          >
+            All Projects ({projectsData.length})
+          </button>
+
+          {featuredTechs.map((tech) => {
+            const count = projectsData.filter((p) => {
+              const allTech = [
+                ...(p.technologies.frontend ?? []),
+                ...(p.technologies.backend ?? []),
+                ...(p.technologies.database ?? []),
+              ];
+              return allTech.some((t) => t.toLowerCase() === tech.toLowerCase());
+            }).length;
+
+            if (count === 0) return null;
+            const isSelected = selectedTech?.toLowerCase() === tech.toLowerCase();
+
+            return (
+              <button
+                key={tech}
+                onClick={() => setSelectedTech(isSelected ? null : tech)}
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+                  isSelected
+                    ? "bg-foreground text-background font-semibold shadow-sm"
+                    : "border border-border text-foreground/60 hover:text-foreground hover:border-foreground/30 bg-background"
+                }`}
+              >
+                <span>{tech}</span>
+                <span className={`text-[10px] font-mono ${isSelected ? "text-background/70" : "text-foreground/40"}`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+
+          {selectedTech && (
+            <button
+              onClick={() => setSelectedTech(null)}
+              className="ml-auto flex items-center gap-1 text-xs text-foreground/50 hover:text-foreground font-mono px-2 py-1"
+            >
+              <X className="w-3.5 h-3.5" />
+              <span>Reset filter</span>
+            </button>
+          )}
+        </motion.div>
+
+        {/* ── Active Filter Feedback Notice ── */}
+        {selectedTech && (
+          <div className="mb-6 flex items-center justify-between px-4 py-2 rounded-xl bg-foreground/5 border border-border text-xs font-mono text-foreground/70">
+            <span>
+              Showing {displayedProjects.length} {displayedProjects.length === 1 ? "project" : "projects"} built with <strong className="text-foreground">{selectedTech}</strong>
+            </span>
+            <button
+              onClick={() => setSelectedTech(null)}
+              className="text-foreground/40 hover:text-foreground underline"
+            >
+              Show all
+            </button>
+          </div>
+        )}
+
         {/* ── HERO card (first project, full-width) ── */}
         <motion.div
+          key={hero.slug}
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -136,9 +248,22 @@ export default function Projects() {
             {/* Tech tags */}
             <div className="flex flex-wrap gap-2 mt-4 relative z-10">
               {[...(hero.technologies.frontend ?? []), ...(hero.technologies.backend ?? [])].map((t) => (
-                <span key={t} className="text-xs px-3 py-1.5 rounded-full border border-border text-foreground/55 font-medium">
+                <button
+                  key={t}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setSelectedTech(selectedTech?.toLowerCase() === t.toLowerCase() ? null : t);
+                  }}
+                  className={`text-xs px-3 py-1.5 rounded-full border transition-all ${
+                    selectedTech?.toLowerCase() === t.toLowerCase()
+                      ? "bg-foreground text-background border-foreground font-semibold"
+                      : "border-border text-foreground/55 font-medium hover:border-foreground/40 hover:text-foreground hover:bg-foreground/5"
+                  }`}
+                  title={`Filter projects by ${t}`}
+                >
                   {t}
-                </span>
+                </button>
               ))}
             </div>
           </Link>
@@ -224,26 +349,27 @@ export default function Projects() {
                     </div>
                   </div>
 
-                  {/* Tech tags */}
-                  <AnimatePresence>
-                    {isHovered && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        className="overflow-hidden"
+                  {/* Tech tags (interactive filter trigger) */}
+                  <div className="flex flex-wrap gap-1.5 mt-4 pt-3 border-t border-border/60">
+                    {[...(project.technologies.frontend ?? []), ...(project.technologies.backend ?? [])].map((t) => (
+                      <button
+                        key={t}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setSelectedTech(selectedTech?.toLowerCase() === t.toLowerCase() ? null : t);
+                        }}
+                        className={`text-[11px] px-2.5 py-1 rounded-full border transition-all ${
+                          selectedTech?.toLowerCase() === t.toLowerCase()
+                            ? "bg-foreground text-background border-foreground font-semibold"
+                            : "border-border text-foreground/50 font-medium hover:border-foreground/40 hover:text-foreground hover:bg-foreground/5"
+                        }`}
+                        title={`Filter projects by ${t}`}
                       >
-                        <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-border">
-                          {[...(project.technologies.frontend ?? []), ...(project.technologies.backend ?? [])].map((t) => (
-                            <span key={t} className="text-xs px-2.5 py-1 rounded-full border border-border text-foreground/50 font-medium">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                        {t}
+                      </button>
+                    ))}
+                  </div>
                 </Link>
               </motion.div>
             );
