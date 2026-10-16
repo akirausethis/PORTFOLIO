@@ -63,16 +63,27 @@ export default function FloatingNav() {
           <Link
             href="/#home"
             className={clsx(
-              "font-heading font-extrabold tracking-tight flex-shrink-0 relative z-50 group",
+              "font-heading font-extrabold tracking-tight flex-shrink-0 relative z-50 group flex items-center gap-2.5",
               isScrolled && !isMobileMenuOpen ? "text-xl pl-2" : "text-2xl"
             )}
           >
-            <span className="text-foreground group-hover:opacity-70 transition-opacity duration-200">vin</span>
-            <span className={clsx(
-              "text-foreground/40 group-hover:text-foreground transition-colors duration-200",
-              isScrolled && !isMobileMenuOpen && "hidden sm:inline" // hide "workspace" on mobile when scrolled
-            )}>workspace</span>
-            <span className="text-foreground/30">.</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo-mark.png"
+              alt="vinworkspace logo"
+              className={clsx(
+                "w-auto object-contain transition-all duration-300 group-hover:scale-105",
+                isScrolled && !isMobileMenuOpen ? "h-5 sm:h-6" : "h-6 sm:h-7"
+              )}
+            />
+            <span>
+              <span className="text-foreground group-hover:opacity-70 transition-opacity duration-200">vin</span>
+              <span className={clsx(
+                "text-foreground/40 group-hover:text-foreground transition-colors duration-200",
+                isScrolled && !isMobileMenuOpen && "hidden sm:inline" // hide "workspace" on mobile when scrolled
+              )}>workspace</span>
+              <span className="text-foreground/30">.</span>
+            </span>
           </Link>
 
           {/* ── Desktop Center Nav ── */}

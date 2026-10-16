@@ -6,6 +6,7 @@ import FloatingNav from "@/components/layout/FloatingNav";
 import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import CommandPalette from "@/components/ui/CommandPalette";
+import Preloader from "@/components/ui/Preloader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,6 +29,13 @@ export const metadata: Metadata = {
   keywords: ["Full Stack Developer", "Next.js", "TypeScript", "React", "AI", "Portfolio", "Kelvin Marcello", "Surabaya"],
   authors: [{ name: "Kelvin Marcello", url: "https://vinworkspace.vercel.app" }],
   creator: "Kelvin Marcello",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/logo-mark.png", type: "image/png" },
+    ],
+    apple: "/logo-mark.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -68,6 +76,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} antialiased scroll-smooth`} suppressHydrationWarning>
       <body className="theme-light min-h-screen flex flex-col overflow-x-hidden selection:bg-accent/20 selection:text-accent">
         <LenisProvider>
+          <Preloader />
           <FloatingNav />
           <main className="flex-1 w-full relative">
             {children}
