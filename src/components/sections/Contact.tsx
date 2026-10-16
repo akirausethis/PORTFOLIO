@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Send, CheckCircle2, AlertCircle, Loader2, MessageCircle, Mail, Copy, Check } from "lucide-react";
 import { SiInstagram, SiGithub } from "@icons-pack/react-simple-icons";
@@ -13,6 +13,17 @@ export default function Contact() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    const handlePackageSelect = (e: Event) => {
+      const customEvent = e as CustomEvent<string>;
+      if (customEvent.detail) {
+        setFormData((prev) => ({ ...prev, subject: customEvent.detail }));
+      }
+    };
+    window.addEventListener("select-package", handlePackageSelect);
+    return () => window.removeEventListener("select-package", handlePackageSelect);
+  }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(EMAIL).then(() => {

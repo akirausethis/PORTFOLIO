@@ -190,6 +190,15 @@ export default function CommandPalette() {
         keywords: ["guestbook", "feedback", "review", "messages"],
       },
       {
+        id: "nav-packages",
+        title: "Service Packages",
+        subtitle: "Starter, Professional & Custom/AI project scopes",
+        category: "Navigation",
+        icon: FileText,
+        action: () => navigateTo("/#packages"),
+        keywords: ["packages", "pricing", "services", "starter", "professional", "custom", "plans", "rates"],
+      },
+      {
         id: "nav-faq",
         title: "Frequently Asked Questions",
         subtitle: "Services, pricing, timeline, revisions & hosting",

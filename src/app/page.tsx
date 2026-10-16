@@ -6,6 +6,7 @@ import Experience from "@/components/sections/Experience";
 import Skills from "@/components/sections/Skills";
 import Creative from "@/components/sections/Creative";
 import Comments from "@/components/sections/Comments";
+import Packages from "@/components/sections/Packages";
 import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <div><Skills /></div>
       <div><Creative /></div>
       <div><Comments /></div>
+      <div><Packages /></div>
       <div><FAQ /></div>
       <div><Contact /></div>
     </div>
