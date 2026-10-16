@@ -190,6 +190,15 @@ export default function CommandPalette() {
         keywords: ["guestbook", "feedback", "review", "messages"],
       },
       {
+        id: "nav-faq",
+        title: "Frequently Asked Questions",
+        subtitle: "Services, pricing, timeline, revisions & hosting",
+        category: "Navigation",
+        icon: Layers,
+        action: () => navigateTo("/#faq"),
+        keywords: ["faq", "questions", "pricing", "services", "timeline", "revisions", "domain", "hosting"],
+      },
+      {
         id: "nav-contact",
         title: "Contact & Inquiries",
         subtitle: "Let's build something together",
