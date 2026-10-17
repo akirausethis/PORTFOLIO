@@ -14,12 +14,12 @@ const faqs: FAQItem[] = [
   {
     question: "What services do you offer?",
     answer:
-      "I offer end-to-end digital product development—including Full-Stack Web Applications (Next.js, TypeScript, PostgreSQL), Interactive 3D & Motion Websites (Three.js, GSAP, Framer Motion), AI Engineering & Workflow Automation (LLM integrations, RAG pipelines, computer vision), and Creative Visual Production.",
+      "I offer end-to-end web development and creative production—including Landing Pages & Company Profiles, E-Commerce Storefronts, Full-Stack Web Applications (Next.js, React, TypeScript, Tailwind CSS, PostgreSQL), UI/UX Design, and Creative Visuals (Photography, Video Editing, and Graphic Design).",
   },
   {
     question: "How do we start a project together?",
     answer:
-      "Simply reach out via WhatsApp or the contact form below with a brief overview of your project idea, goals, and timeline. We will schedule a quick discovery chat to align on scope, architecture, and deliverables before kicking off design and development.",
+      "Simply reach out via WhatsApp or the contact form below with a brief overview of your project idea, goals, and timeline. We will schedule a quick discovery chat to align on scope, features, and deliverables before kicking off design and development.",
   },
   {
     question: "How does your pricing work?",
@@ -29,22 +29,17 @@ const faqs: FAQItem[] = [
   {
     question: "How long does a typical project take?",
     answer:
-      "A high-converting landing page or interactive portfolio typically takes 1–2 weeks. Custom full-stack web applications, e-commerce platforms, or AI-integrated systems generally take 3–6 weeks depending on feature complexity and integrations.",
+      "A high-converting landing page or company profile typically takes 3–7 business days. Full-stack web applications, e-commerce storefronts, or multi-page websites generally take 2–4 weeks depending on feature depth.",
   },
   {
     question: "Do you offer revisions?",
     answer:
-      "Yes! Every project includes dedicated revision rounds during both the design/prototyping stage and final development review to ensure the finished product matches your vision down to the finest detail.",
+      "Yes! Every project includes dedicated revision rounds during both the design/prototyping stage and final development review to ensure the finished website matches your vision down to the finest detail.",
   },
   {
     question: "Are domain and hosting included?",
     answer:
-      "I handle the complete deployment, cloud hosting setup (Vercel, AWS, or VPS), SSL security, and custom domain routing at no extra setup charge. Domain purchase and any paid cloud tiers can either be included in the package or registered directly under your own account for 100% ownership.",
-  },
-  {
-    question: "Do you take on custom projects?",
-    answer:
-      "Absolutely. Whether you need a custom e-commerce experience, an interactive 3D web showcase, a bespoke internal dashboard, or an automated AI workflow tailored to your business operations, I build custom solutions from the ground up.",
+      "I handle the complete deployment, cloud hosting setup (Vercel or VPS), SSL security, and domain routing at no extra setup charge. Domain registration and any paid hosting tiers can either be included in the package or set up directly under your own account for 100% ownership.",
   },
 ];
 

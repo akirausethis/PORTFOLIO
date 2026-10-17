@@ -33,11 +33,11 @@ const packages: ServicePackage[] = [
   {
     tier: "PROFESSIONAL",
     badge: "Most Popular",
-    tagline: "Full-stack web applications, e-commerce, and interactive 3D sites.",
+    tagline: "Full-stack web applications, e-commerce stores, and multi-page sites.",
     priceTitle: "Pricing tailored to your needs",
     priceSubtitle: "Fixed-price or milestone quote based on feature scope.",
     features: [
-      "Full-Stack Web App, E-Commerce, or 3D Web Experience",
+      "Full-Stack Web Application or E-Commerce Storefront",
       "Custom Backend API, Database (PostgreSQL) & Admin Dashboard",
       "4 rounds of revisions + SEO & performance optimization",
       "Estimated 2–4 weeks turnaround",
@@ -45,20 +45,6 @@ const packages: ServicePackage[] = [
     ],
     featured: true,
     ctaText: "Choose Professional",
-  },
-  {
-    tier: "CUSTOM & AI",
-    tagline: "Bespoke systems, AI automation workflows, and creative production.",
-    priceTitle: "Pricing tailored to your needs",
-    priceSubtitle: "Scoped collaboratively around your custom architecture.",
-    features: [
-      "Custom AI Agents, RAG Pipelines, or Scalable SaaS Product",
-      "End-to-End Engineering + Creative Visual/Motion Production",
-      "Flexible iterative revisions across development sprints",
-      "Timeline tailored to your product roadmap",
-      "Priority communication, technical docs & post-launch support",
-    ],
-    ctaText: "Discuss Custom Scope",
   },
 ];
 
@@ -110,8 +96,8 @@ export default function Packages() {
           </p>
         </motion.div>
 
-        {/* ── 3 Package Cards Grid ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {/* ── Package Cards Grid ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-stretch max-w-4xl mx-auto">
           {packages.map((pkg, idx) => (
             <motion.div
               key={pkg.tier}

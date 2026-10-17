@@ -192,11 +192,11 @@ export default function CommandPalette() {
       {
         id: "nav-packages",
         title: "Service Packages",
-        subtitle: "Starter, Professional & Custom/AI project scopes",
+        subtitle: "Starter & Professional web development scopes",
         category: "Navigation",
         icon: FileText,
         action: () => navigateTo("/#packages"),
-        keywords: ["packages", "pricing", "services", "starter", "professional", "custom", "plans", "rates"],
+        keywords: ["packages", "pricing", "services", "starter", "professional", "plans", "rates"],
       },
       {
         id: "nav-faq",
