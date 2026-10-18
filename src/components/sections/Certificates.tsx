@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Award,
@@ -16,59 +16,133 @@ import {
   ShieldCheck,
   Maximize2,
   X,
-  Sparkles,
+  ChevronRight,
 } from "lucide-react";
+import clsx from "clsx";
 
 interface Certificate {
   id: string;
   title: string;
-  recipient: string;
+  category: "All" | "Eterna" | "IBM" | "Kaggle";
   program: string;
   issuer: string;
-  partnerInstitution: string;
+  issuerShort: string;
+  partnerInstitution?: string;
   credentialId: string;
   issueDate: string;
   role: string;
-  cohort: string;
   description: string;
   image: string;
-  pdfUrl: string;
-  issuerUrl: string;
+  pdfUrl?: string;
+  verifyUrl: string;
   skills: string[];
+  themeColor: string;
 }
 
-const certificates: Certificate[] = [
+const certificatesData: Certificate[] = [
   {
     id: "eterna-2026",
     title: "Certificate of Accomplishment",
-    recipient: "Kelvin Marcello Piter",
+    category: "Eterna",
     program: "Eterna Indonesia Internship Program 2026",
     issuer: "Eterna Indonesia (PT Daya Abadi Indonesia)",
+    issuerShort: "Eterna Indonesia",
     partnerInstitution: "Ciputra University",
     credentialId: "02/ETERNA-UC/INT/X/2026",
     issueDate: "October 13, 2026",
     role: "Full Stack Developer Intern",
-    cohort: "UC Interns 2026 Cohort",
     description:
-      "Awarded in recognition of successfully completing the rigorous internship program as a Full Stack Developer Intern at Eterna Indonesia, demonstrating exceptional dedication, technical growth, and meaningful engineering contributions to real-world production systems.",
+      "Awarded in recognition of successfully completing the internship program as a Full Stack Developer Intern at Eterna Indonesia, demonstrating technical growth and meaningful engineering contributions to real-world production systems.",
     image: "/certificates/eterna-internship-certificate.jpg",
     pdfUrl: "/certificates/eterna-internship-certificate.pdf",
-    issuerUrl: "https://eternaindonesia.com",
-    skills: [
-      "Next.js",
-      "TypeScript",
-      "PostgreSQL",
-      "Prisma",
-      "Discord API",
-      "CI/CD Pipelines",
-      "Full Stack Development",
-    ],
+    verifyUrl: "https://eternaindonesia.com",
+    skills: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "CI/CD"],
+    themeColor: "from-emerald-500/10 to-teal-500/5 text-emerald-700 border-emerald-500/20",
+  },
+  {
+    id: "ibm-python-101",
+    title: "Python 101 for Data Science",
+    category: "IBM",
+    program: "IBM Developer Skills Network (PY0101EN)",
+    issuer: "IBM SkillsBuild",
+    issuerShort: "IBM",
+    credentialId: "4e069175d1804dcdb6189693169d918b",
+    issueDate: "May 16, 2025",
+    role: "Course Graduate",
+    description:
+      "Certified by IBM SkillsBuild for successfully completing Python programming fundamentals, data structures, logic flow, and data science libraries.",
+    image: "/certificates/ibm-python-101.jpg",
+    verifyUrl:
+      "https://courses.skillsbuild.skillsnetwork.site/certificates/4e069175d1804dcdb6189693169d918b",
+    skills: ["Python", "Data Science", "Jupyter", "Algorithms"],
+    themeColor: "from-blue-500/10 to-indigo-500/5 text-blue-700 border-blue-500/20",
+  },
+  {
+    id: "ibm-data-analysis",
+    title: "Data Analysis with Python",
+    category: "IBM",
+    program: "IBM Developer Skills Network (DA0101EN)",
+    issuer: "IBM SkillsBuild",
+    issuerShort: "IBM",
+    credentialId: "4d8b75fa085047168ca159a60cb2f34b",
+    issueDate: "May 16, 2025",
+    role: "Course Graduate",
+    description:
+      "Certified by IBM SkillsBuild for data wrangling, exploratory data analysis, statistical model development, and predictive evaluation using Python.",
+    image: "/certificates/ibm-data-analysis.jpg",
+    verifyUrl:
+      "https://courses.skillsbuild.skillsnetwork.site/certificates/4d8b75fa085047168ca159a60cb2f34b",
+    skills: ["Pandas", "NumPy", "Data Wrangling", "Scikit-Learn"],
+    themeColor: "from-blue-500/10 to-indigo-500/5 text-blue-700 border-blue-500/20",
+  },
+  {
+    id: "ibm-data-visualization",
+    title: "Data Visualization with Python",
+    category: "IBM",
+    program: "IBM Developer Skills Network (DV0101EN)",
+    issuer: "IBM SkillsBuild",
+    issuerShort: "IBM",
+    credentialId: "02cd3781f8a34e9f9555280af5728170",
+    issueDate: "May 16, 2025",
+    role: "Course Graduate",
+    description:
+      "Certified by IBM SkillsBuild for creating visual data dashboards, statistical plots, interactive charts, and maps using Matplotlib, Seaborn, and Folium.",
+    image: "/certificates/ibm-data-visualization.jpg",
+    verifyUrl:
+      "https://courses.skillsbuild.skillsnetwork.site/certificates/02cd3781f8a34e9f9555280af5728170",
+    skills: ["Matplotlib", "Seaborn", "Folium", "Visual Analytics"],
+    themeColor: "from-blue-500/10 to-indigo-500/5 text-blue-700 border-blue-500/20",
+  },
+  {
+    id: "kaggle-intro-programming",
+    title: "Intro to Programming",
+    category: "Kaggle",
+    program: "Kaggle Learn Certification",
+    issuer: "Kaggle (Alexis Cook, Head of Kaggle Learn)",
+    issuerShort: "Kaggle",
+    credentialId: "Kaggle Learn Verified",
+    issueDate: "February 21, 2025",
+    role: "Course Graduate",
+    description:
+      "Certificate of completion from Kaggle demonstrating mastery of core programmatic reasoning, arithmetic functions, conditional statements, and Python structures.",
+    image: "/certificates/kaggle-intro-programming.jpg",
+    verifyUrl: "https://www.kaggle.com/learn",
+    skills: ["Python", "Control Flow", "Functions", "Data Types"],
+    themeColor: "from-sky-500/10 to-cyan-500/5 text-sky-700 border-sky-500/20",
   },
 ];
 
+const categories = ["All", "Eterna", "IBM", "Kaggle"] as const;
+
 export default function Certificates() {
-  const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [activeModalCert, setActiveModalCert] = useState<Certificate | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const filteredCerts = useMemo(() => {
+    if (selectedCategory === "All") return certificatesData;
+    return certificatesData.filter((c) => c.category === selectedCategory);
+  }, [selectedCategory]);
 
   const copyCredential = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
@@ -76,7 +150,7 @@ export default function Certificates() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  // Close modal with Escape key
+  // Close modal on Escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActiveModalCert(null);
@@ -96,253 +170,138 @@ export default function Certificates() {
   return (
     <section
       id="certificates"
-      className="py-28 md:py-36 w-full border-t border-border bg-background relative overflow-hidden"
+      className="py-16 md:py-20 w-full border-t border-border bg-background relative overflow-hidden"
     >
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        {/* ── Section Header ── */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 md:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-foreground/[0.05] border border-border text-xs font-semibold tracking-wider text-foreground uppercase mb-6">
-              <Award className="w-3.5 h-3.5 text-foreground/70" />
-              <span>Verified Credentials</span>
+        {/* ── Compact Header & Category Filter Bar ── */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-6 border-b border-border/60">
+          <div>
+            <div className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-foreground/50 mb-2">
+              <Award className="w-3.5 h-3.5 text-foreground/60" />
+              <span>Verified Credentials ({certificatesData.length})</span>
             </div>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-foreground leading-[1.1]">
-              Certificates &amp; <br />
-              <span className="text-foreground/35">Accomplishments</span>
+            <h2 className="text-2xl sm:text-3xl font-heading font-bold text-foreground tracking-tight">
+              Certificates &amp; Accomplishments
             </h2>
-          </motion.div>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="text-base text-foreground/55 font-light max-w-sm"
-          >
-            Formal industry credentials and institutional validations testifying
-            to real-world engineering impact and technical rigor.
-          </motion.p>
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            {categories.map((cat) => {
+              const count =
+                cat === "All"
+                  ? certificatesData.length
+                  : certificatesData.filter((c) => c.category === cat).length;
+              const isSelected = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={clsx(
+                    "px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 shrink-0 cursor-pointer",
+                    isSelected
+                      ? "bg-foreground text-background shadow-xs font-semibold"
+                      : "bg-foreground/[0.04] text-foreground/60 hover:text-foreground hover:bg-foreground/[0.08]"
+                  )}
+                >
+                  <span>{cat}</span>
+                  <span className="ml-1.5 text-[11px] opacity-60">({count})</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* ── Certificates Display ── */}
-        <div className="space-y-12">
-          {certificates.map((cert) => (
-            <motion.div
-              key={cert.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="rounded-3xl border border-border bg-white shadow-[0_12px_40px_rgba(0,0,0,0.03)] overflow-hidden"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
-                {/* ── Left Column: Interactive Certificate Visual ── */}
-                <div className="lg:col-span-7 bg-[#F4F4F6] p-6 sm:p-10 flex flex-col justify-center items-center relative group border-b lg:border-b-0 lg:border-r border-border">
-                  {/* Subtle Background Pattern */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 pointer-events-none opacity-[0.4]"
-                    style={{
-                      backgroundImage: `
-                        linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
-                        linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px)
-                      `,
-                      backgroundSize: "32px 32px",
-                    }}
-                  />
-
-                  {/* Top Status Pill */}
-                  <div className="w-full flex items-center justify-between mb-5 z-10">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm border border-black/5 text-[11px] font-semibold text-emerald-700 shadow-xs">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>Verified Industry Credential</span>
-                    </span>
-                    <span className="text-[11px] font-mono text-foreground/50 uppercase tracking-widest hidden sm:inline">
-                      100% Authentic
-                    </span>
-                  </div>
-
-                  {/* Certificate Frame with Hover Preview Effect */}
-                  <div
-                    onClick={() => setActiveModalCert(cert)}
-                    className="relative w-full max-w-[620px] rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.08)] border border-black/10 cursor-pointer transform transition-all duration-500 group-hover:scale-[1.015] group-hover:shadow-[0_24px_50px_rgba(0,0,0,0.12)] z-10"
-                  >
+        {/* ── Compact Cards Grid (impactful, responsive, no scroll bloat) ── */}
+        <motion.div
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredCerts.map((cert) => (
+              <motion.div
+                key={cert.id}
+                layout
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.3 }}
+                onClick={() => setActiveModalCert(cert)}
+                className="group relative rounded-2xl border border-border bg-white p-4 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] hover:border-foreground/30 transition-all duration-300 cursor-pointer"
+              >
+                <div>
+                  {/* Thumbnail Preview with Subtle Hover Action */}
+                  <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-foreground/5 border border-border/60 mb-3.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={cert.image}
                       alt={cert.title}
-                      className="w-full h-auto object-cover select-none"
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
 
-                    {/* Hover Overlay with "Click to Expand" */}
-                    <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                      <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-zinc-950 font-semibold text-xs tracking-wide shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                        <Maximize2 className="w-4 h-4 text-zinc-800" />
-                        <span>Click to Expand High-Res</span>
+                    {/* Verified Badge Overlay */}
+                    <div className="absolute top-2.5 left-2.5 z-10">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/95 backdrop-blur-sm border border-black/5 text-[10px] font-semibold text-emerald-700 shadow-xs">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                        <span>{cert.issuerShort}</span>
+                      </span>
+                    </div>
+
+                    {/* Hover Zoom Icon */}
+                    <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                      <span className="p-2 rounded-full bg-white text-zinc-950 shadow-md transform translate-y-1 group-hover:translate-y-0 transition-transform">
+                        <Maximize2 className="w-4 h-4" />
                       </span>
                     </div>
                   </div>
 
-                  {/* Bottom helper prompt */}
-                  <p className="text-[11px] text-foreground/45 mt-4 z-10 flex items-center gap-1.5">
-                    <Eye className="w-3.5 h-3.5 text-foreground/40" />
-                    <span>Click certificate image to inspect official seal and signatures in 4K</span>
-                  </p>
-                </div>
-
-                {/* ── Right Column: Credential Metadata & Verification Details ── */}
-                <div className="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between">
-                  <div>
-                    {/* Header info */}
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200/60">
-                        <ShieldCheck className="w-3 h-3" />
-                        Verified
-                      </span>
-                      <span className="text-xs text-foreground/40 font-mono">
-                        {cert.cohort}
-                      </span>
-                    </div>
-
-                    <h3 className="text-2xl sm:text-3xl font-heading font-bold text-foreground tracking-tight mb-2">
-                      {cert.title}
-                    </h3>
-                    <p className="text-sm font-semibold text-foreground/75 mb-6">
+                  {/* Title & Organization */}
+                  <div className="mb-2">
+                    <p className="text-[11px] font-mono font-medium text-foreground/45 uppercase tracking-wider mb-1">
                       {cert.program}
                     </p>
-
-                    {/* Official description quote block */}
-                    <div className="relative pl-4 border-l-2 border-foreground/20 italic text-xs sm:text-[13px] text-foreground/70 leading-relaxed mb-8">
-                      &ldquo;{cert.description}&rdquo;
-                    </div>
-
-                    {/* Metadata Key-Value Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pb-6 border-b border-border">
-                      <div className="p-3.5 rounded-xl bg-foreground/[0.02] border border-border/70">
-                        <div className="flex items-center gap-1.5 text-foreground/40 text-[10px] uppercase font-bold tracking-wider mb-1">
-                          <Building2 className="w-3.5 h-3.5" />
-                          <span>Issuer</span>
-                        </div>
-                        <p className="text-xs font-semibold text-foreground">
-                          {cert.issuer}
-                        </p>
-                        <p className="text-[11px] text-foreground/50">
-                          {cert.partnerInstitution}
-                        </p>
-                      </div>
-
-                      <div className="p-3.5 rounded-xl bg-foreground/[0.02] border border-border/70">
-                        <div className="flex items-center gap-1.5 text-foreground/40 text-[10px] uppercase font-bold tracking-wider mb-1">
-                          <Calendar className="w-3.5 h-3.5" />
-                          <span>Issued On</span>
-                        </div>
-                        <p className="text-xs font-semibold text-foreground">
-                          {cert.issueDate}
-                        </p>
-                        <p className="text-[11px] text-foreground/50">
-                          Jakarta, Indonesia
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Credential ID with Copy Action */}
-                    <div className="py-4 border-b border-border flex items-center justify-between gap-3">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-foreground/40 mb-0.5">
-                          <Hash className="w-3 h-3" />
-                          <span>Credential ID</span>
-                        </div>
-                        <p className="font-mono text-xs text-foreground font-semibold truncate">
-                          {cert.credentialId}
-                        </p>
-                      </div>
-
-                      <button
-                        type="button"
-                        onClick={() =>
-                          copyCredential(cert.id, cert.credentialId)
-                        }
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border text-xs font-medium text-foreground/70 hover:text-foreground hover:bg-foreground/[0.04] transition-colors shrink-0 cursor-pointer"
-                        title="Copy Credential ID"
-                      >
-                        {copiedId === cert.id ? (
-                          <>
-                            <Check className="w-3.5 h-3.5 text-emerald-600" />
-                            <span className="text-emerald-700 font-semibold">Copied!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="w-3.5 h-3.5" />
-                            <span>Copy</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-
-                    {/* Skills Tag Cloud */}
-                    <div className="pt-4 mb-8">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-foreground/40 mb-2">
-                        Validated Competencies
-                      </p>
-                      <div className="flex flex-wrap gap-1.5">
-                        {cert.skills.map((skill) => (
-                          <span
-                            key={skill}
-                            className="px-2.5 py-1 rounded-md text-[11px] font-medium bg-foreground/[0.04] text-foreground/75 border border-border/60"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+                    <h3 className="text-base font-bold text-foreground leading-snug group-hover:text-foreground/75 transition-colors line-clamp-1">
+                      {cert.title}
+                    </h3>
                   </div>
 
-                  {/* ── Action Buttons ── */}
-                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setActiveModalCert(cert)}
-                      className="w-full sm:w-auto flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-foreground text-background text-xs font-semibold hover:bg-foreground/85 transition-all shadow-xs cursor-pointer group"
-                    >
-                      <Eye className="w-4 h-4 transition-transform group-hover:scale-110" />
-                      <span>View High-Res Certificate</span>
-                    </button>
-
-                    <a
-                      href={cert.pdfUrl}
-                      download="Kelvin-Marcello-Eterna-Certificate.pdf"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-border bg-white text-xs font-semibold text-foreground hover:bg-foreground/[0.03] transition-colors"
-                      title="Download Official PDF"
-                    >
-                      <Download className="w-3.5 h-3.5 text-foreground/70" />
-                      <span>Download PDF</span>
-                    </a>
-
-                    <a
-                      href={cert.issuerUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center p-3 rounded-xl border border-border text-foreground/60 hover:text-foreground hover:bg-foreground/[0.03] transition-colors"
-                      title="Visit Issuer Website (eternaindonesia.com)"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+                  {/* Skills tags */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {cert.skills.slice(0, 3).map((s) => (
+                      <span
+                        key={s}
+                        className="text-[10px] px-2 py-0.5 rounded bg-foreground/[0.03] text-foreground/60 border border-border/50"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                    {cert.skills.length > 3 && (
+                      <span className="text-[10px] px-1.5 py-0.5 text-foreground/40 font-mono">
+                        +{cert.skills.length - 3}
+                      </span>
+                    )}
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
+                {/* Card Footer: Issue date & Quick View */}
+                <div className="pt-2.5 border-t border-border/50 flex items-center justify-between text-xs text-foreground/50">
+                  <span className="text-[11px] font-medium">{cert.issueDate}</span>
+                  <span className="inline-flex items-center gap-1 font-semibold text-foreground text-[11px] group-hover:translate-x-0.5 transition-transform">
+                    <span>View Credential</span>
+                    <ChevronRight className="w-3.5 h-3.5 text-foreground/60" />
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
-      {/* ── High-Resolution Lightbox Modal ── */}
+      {/* ── 4K Lightbox Modal (High-Res Inspection & Verification) ── */}
       <AnimatePresence>
         {activeModalCert && (
-          <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-8">
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6 md:p-8">
             {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
@@ -357,33 +316,45 @@ export default function Certificates() {
               initial={{ opacity: 0, scale: 0.95, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-5xl bg-zinc-950 text-white rounded-3xl overflow-hidden shadow-2xl border border-white/10 z-10 flex flex-col max-h-[92vh]"
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-4xl bg-zinc-950 text-white rounded-3xl overflow-hidden shadow-2xl border border-white/10 z-10 flex flex-col max-h-[92vh]"
             >
               {/* Modal Top Bar */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-zinc-900/80">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                    <Award className="w-4 h-4" />
+              <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-white/10 bg-zinc-900/80">
+                <div className="flex items-center gap-3 min-w-0 pr-4">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white leading-tight">
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold text-white leading-tight truncate">
                       {activeModalCert.title}
                     </h4>
-                    <p className="text-xs text-white/50">
-                      {activeModalCert.issuer} · ID: {activeModalCert.credentialId}
+                    <p className="text-xs text-white/50 truncate">
+                      {activeModalCert.issuer} · {activeModalCert.issueDate}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
+                  {activeModalCert.pdfUrl && (
+                    <a
+                      href={activeModalCert.pdfUrl}
+                      download="Kelvin-Marcello-Eterna-Certificate.pdf"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-white transition-colors"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span className="hidden sm:inline">PDF</span>
+                    </a>
+                  )}
+
                   <a
-                    href={activeModalCert.pdfUrl}
-                    download="Kelvin-Marcello-Eterna-Certificate.pdf"
+                    href={activeModalCert.verifyUrl}
+                    target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs font-medium text-white transition-colors"
                   >
-                    <Download className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Download PDF</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Verify</span>
                   </a>
 
                   <button
@@ -397,23 +368,50 @@ export default function Certificates() {
               </div>
 
               {/* Modal Image Viewport */}
-              <div className="overflow-auto p-4 sm:p-6 flex items-center justify-center bg-zinc-900/50">
+              <div className="overflow-auto p-4 sm:p-6 flex items-center justify-center bg-zinc-900/40">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={activeModalCert.image}
                   alt={activeModalCert.title}
-                  className="max-w-full max-h-[72vh] w-auto h-auto rounded-xl shadow-2xl object-contain border border-white/10 select-none"
+                  className="max-w-full max-h-[65vh] w-auto h-auto rounded-xl shadow-2xl object-contain border border-white/10 select-none"
                 />
               </div>
 
-              {/* Modal Bottom Verification Footer */}
-              <div className="px-6 py-3 border-t border-white/10 bg-zinc-950 flex flex-wrap items-center justify-between gap-3 text-xs text-white/60">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Officially signed by COO Omar Mohammad Saleh Alatas</span>
+              {/* Modal Bottom Metadata Row */}
+              <div className="px-5 sm:px-6 py-3 border-t border-white/10 bg-zinc-950 flex flex-wrap items-center justify-between gap-3 text-xs text-white/70">
+                <div className="flex items-center gap-2 min-w-0">
+                  <Hash className="w-3.5 h-3.5 text-white/40 shrink-0" />
+                  <span className="font-mono text-[11px] truncate text-white/60">
+                    ID: {activeModalCert.credentialId}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      copyCredential(
+                        activeModalCert.id,
+                        activeModalCert.credentialId
+                      )
+                    }
+                    className="p-1 rounded hover:bg-white/10 text-white/60 hover:text-white transition-colors cursor-pointer"
+                    title="Copy Credential ID"
+                  >
+                    {copiedId === activeModalCert.id ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                  </button>
                 </div>
-                <div className="font-mono text-[11px] text-white/40">
-                  PT Daya Abadi Indonesia · SCBD Lot 28, Jakarta
+
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {activeModalCert.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="px-2 py-0.5 rounded text-[10px] bg-white/10 text-white/80"
+                    >
+                      {s}
+                    </span>
+                  ))}
                 </div>
               </div>
             </motion.div>
