@@ -23,6 +23,7 @@ import {
   Mail,
   Layers,
   Code2,
+  Award,
 } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { projectsData } from "@/data/projects";
@@ -160,6 +161,15 @@ export default function CommandPalette() {
         icon: GraduationCap,
         action: () => navigateTo("/#experience"),
         keywords: ["jobs", "career", "eterna", "ciputra", "work"],
+      },
+      {
+        id: "nav-certificates",
+        title: "Certificates & Accomplishments",
+        subtitle: "Verified industry credentials (Eterna Indonesia internship)",
+        category: "Navigation",
+        icon: Award,
+        action: () => navigateTo("/#certificates"),
+        keywords: ["certificates", "credentials", "eterna", "accomplishment", "internship", "diploma", "award"],
       },
       {
         id: "nav-skills",

@@ -3,6 +3,7 @@ import About from "@/components/sections/About";
 import HowIWork from "@/components/sections/HowIWork";
 import Projects from "@/components/sections/Projects";
 import Experience from "@/components/sections/Experience";
+import Certificates from "@/components/sections/Certificates";
 import Skills from "@/components/sections/Skills";
 import Creative from "@/components/sections/Creative";
 import Comments from "@/components/sections/Comments";
@@ -18,6 +19,7 @@ export default function Home() {
       <div><HowIWork /></div>
       <div><Projects /></div>
       <div><Experience /></div>
+      <div><Certificates /></div>
       <div><Skills /></div>
       <div><Creative /></div>
       <div><Comments /></div>
