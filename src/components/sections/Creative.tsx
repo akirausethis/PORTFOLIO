@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight, Camera, Palette, Video, Film, Sparkles, Layers } from "lucide-react";
 
 const EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -38,10 +37,10 @@ const disciplines = [
   },
   {
     icon: Video,
-    title: "Cinematic Video",
-    badge: "Recap & AMV",
-    description: "Dynamic pacing, sound sync, and multi-cam recap videos for campus & tech events.",
-    preview: "https://img.youtube.com/vi/njg9biKAzuE/hqdefault.jpg",
+    title: "Event Recap",
+    badge: "Recap & Teaser",
+    description: "Dynamic pacing, music sync, and multi-cam recap videos for campus & tech events.",
+    preview: "/creative/Motion Editing/Motion Design/RED CARPET NIGHT/RCN - Photobooth.png",
     tools: ["CapCut", "After Effects", "Premiere"],
     accent: "from-rose-500/20 to-pink-500/0",
   },
@@ -121,7 +120,7 @@ export default function Creative() {
               className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-heading font-black tracking-tight leading-[0.93] text-foreground mb-6"
             >
               Beyond the <br />
-              <span className="italic font-serif font-light text-foreground/60">terminal</span> &amp; code.
+              terminal &amp; code.
             </motion.h2>
             <motion.p
               custom={2}
@@ -184,12 +183,11 @@ export default function Creative() {
               >
                 {/* Image preview with gradient vignette */}
                 <div className="relative aspect-[16/11] w-full overflow-hidden bg-foreground/5">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={item.preview}
                     alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
@@ -261,12 +259,11 @@ export default function Creative() {
                   key={`${art.title}-${i}`}
                   className="relative shrink-0 w-44 sm:w-56 aspect-[4/3] rounded-2xl overflow-hidden border border-border group"
                 >
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={art.image}
                     alt={art.title}
-                    fill
-                    sizes="224px"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
