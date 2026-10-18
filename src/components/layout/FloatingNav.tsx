@@ -48,23 +48,23 @@ export default function FloatingNav() {
       <header
         className={clsx(
           "fixed inset-x-0 z-[100] transition-all duration-500 flex justify-center pointer-events-none",
-          isScrolled ? "top-4 lg:top-6" : "top-0 py-8 lg:py-10"
+          isScrolled ? "top-3 sm:top-4 lg:top-6" : "top-0 py-5 sm:py-8 lg:py-10"
         )}
       >
         <div
           className={clsx(
             "pointer-events-auto flex items-center justify-between transition-all duration-500",
             isScrolled && !isMobileMenuOpen
-              ? "px-4 py-2 lg:py-2.5 bg-background/85 backdrop-blur-xl border border-border/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full lg:w-auto w-[calc(100%-2rem)] lg:gap-10"
-              : "px-6 md:px-12 w-full max-w-[1400px] bg-transparent border-transparent"
+              ? "px-3 sm:px-4 py-2 lg:py-2.5 bg-background/85 backdrop-blur-xl border border-border/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full lg:w-auto w-[calc(100%-1.5rem)] sm:w-[calc(100%-2rem)] lg:gap-10"
+              : "px-4 sm:px-6 md:px-12 w-full max-w-[1400px] bg-transparent border-transparent"
           )}
         >
           {/* ── Logo ── */}
           <Link
             href="/#home"
             className={clsx(
-              "font-heading font-extrabold tracking-tight flex-shrink-0 relative z-50 group flex items-center gap-2.5",
-              isScrolled && !isMobileMenuOpen ? "text-xl pl-2" : "text-2xl"
+              "font-heading font-extrabold tracking-tight shrink-0 relative z-50 group flex items-center gap-2 sm:gap-2.5 min-w-0",
+              isScrolled && !isMobileMenuOpen ? "text-lg sm:text-xl pl-1 sm:pl-2" : "text-xl sm:text-2xl"
             )}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -72,15 +72,15 @@ export default function FloatingNav() {
               src="/logo-mark.png"
               alt="vinworkspace logo"
               className={clsx(
-                "w-auto object-contain transition-all duration-300 group-hover:scale-105",
-                isScrolled && !isMobileMenuOpen ? "h-5 sm:h-6" : "h-6 sm:h-7"
+                "w-auto object-contain transition-all duration-300 group-hover:scale-105 shrink-0",
+                isScrolled && !isMobileMenuOpen ? "h-5 sm:h-6" : "h-5 sm:h-7"
               )}
             />
-            <span>
+            <span className="truncate">
               <span className="text-foreground group-hover:opacity-70 transition-opacity duration-200">vin</span>
               <span className={clsx(
                 "text-foreground/40 group-hover:text-foreground transition-colors duration-200",
-                isScrolled && !isMobileMenuOpen && "hidden sm:inline" // hide "workspace" on mobile when scrolled
+                "hidden sm:inline" // Hide "workspace" on mobile screens so it never overflows or pushes the burger menu off screen
               )}>workspace</span>
               <span className="text-foreground/30">.</span>
             </span>
@@ -146,14 +146,14 @@ export default function FloatingNav() {
           </div>
 
           {/* ── Mobile Actions: Search + Dedicated Creative Button + Hamburger ── */}
-          <div className="lg:hidden flex items-center gap-2 relative z-50">
+          <div className="lg:hidden flex items-center gap-1.5 sm:gap-2 relative z-50 shrink-0">
             <button
               onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
               className={clsx(
-                "flex items-center justify-center rounded-full border transition-all duration-300",
+                "flex items-center justify-center rounded-full border transition-all duration-300 shrink-0",
                 isScrolled && !isMobileMenuOpen
                   ? "w-8 h-8 border-border/40 bg-foreground/5 text-foreground/70"
-                  : "w-9 h-9 border-border/60 bg-background/80 text-foreground/70 hover:text-foreground"
+                  : "w-8 sm:w-9 h-8 sm:h-9 border-border/60 bg-background/80 text-foreground/70 hover:text-foreground"
               )}
               aria-label="Open Command Palette"
               title="Search (Cmd + K)"
@@ -164,23 +164,23 @@ export default function FloatingNav() {
             <Link
               href="/creative"
               className={clsx(
-                "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide border transition-all duration-300",
+                "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide border transition-all duration-300 shrink-0",
                 isScrolled && !isMobileMenuOpen
                   ? "border-border/60 bg-foreground/5 text-foreground hover:bg-foreground hover:text-background"
                   : "border-border/60 bg-background/80 backdrop-blur-md text-foreground hover:bg-foreground hover:text-background"
               )}
             >
-              <Sparkles className="w-3.5 h-3.5" />
+              <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5" />
               <span>Creative</span>
             </Link>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={clsx(
-                "flex items-center justify-center rounded-full border transition-all duration-300",
+                "flex items-center justify-center rounded-full border transition-all duration-300 shrink-0",
                 isScrolled && !isMobileMenuOpen 
-                  ? "w-9 h-9 border-border/40 bg-foreground/5 text-foreground" 
-                  : "w-10 h-10 border-border/60 bg-background/80 text-foreground hover:bg-foreground hover:text-background"
+                  ? "w-8 sm:w-9 h-8 sm:h-9 border-border/40 bg-foreground/5 text-foreground" 
+                  : "w-9 sm:w-10 h-9 sm:h-10 border-border/60 bg-background/80 text-foreground hover:bg-foreground hover:text-background"
               )}
               aria-label="Toggle menu"
             >
@@ -208,7 +208,7 @@ export default function FloatingNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-xl flex flex-col px-6 md:px-12 pt-28 pb-12 overflow-y-auto"
+            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-xl flex flex-col px-5 sm:px-6 md:px-12 pt-24 sm:pt-28 pb-12 overflow-y-auto overflow-x-hidden"
           >
             {/* Dedicated Creative Feature Card in Mobile Menu */}
             <div className="mb-4">
