@@ -6,12 +6,13 @@ import { SiGithub, SiInstagram } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
 
 const links = [
-  { label: "Work",       href: "#projects"  },
-  { label: "About",      href: "#about"     },
-  { label: "Process",    href: "#how-i-work"},
-  { label: "Experience", href: "#experience"},
-  { label: "Creative",   href: "/creative"  },
-  { label: "Contact",    href: "#contact"   },
+  { label: "Work",         href: "/#projects"    },
+  { label: "About",        href: "/#about"       },
+  { label: "Process",      href: "/#how-i-work"  },
+  { label: "Experience",   href: "/#experience"  },
+  { label: "Certificates", href: "/#certificates"},
+  { label: "Creative",     href: "/creative"     },
+  { label: "Contact",      href: "/#contact"     },
 ];
 
 const socials = [

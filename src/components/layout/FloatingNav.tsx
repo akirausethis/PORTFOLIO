@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
 import { Menu, X, ArrowUpRight, Briefcase, User, GraduationCap, MessageSquare, Sparkles, Search } from "lucide-react";
@@ -15,20 +16,27 @@ const navItems = [
 ];
 
 export default function FloatingNav() {
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    if (pathname === "/creative") {
+      setActiveSection("creative");
+      return;
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
-      const sections = navItems.map((i) => i.href.replace("/#", ""));
+      const sections = navItems
+        .filter((i) => i.href.startsWith("/#"))
+        .map((i) => i.href.replace("/#", ""));
       let current = "";
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
           const { top, bottom } = el.getBoundingClientRect();
-          // If the top of the section is anywhere in the upper half of screen, or it takes up the screen
           if (top <= 200 && bottom >= 200) current = section;
         }
       }
@@ -37,7 +45,7 @@ export default function FloatingNav() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
