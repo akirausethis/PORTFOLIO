@@ -27,6 +27,36 @@ export type Project = {
 
 export const projectsData: Project[] = [
   {
+    slug: "sourcewise",
+    title: "SOURCEWISE",
+    category: "Academic AI Research Workspace",
+    shortDescription: "An evidence-grounded research workspace for students, thesis writers, and researchers with interactive paper reading, verifiable page proofs, and research gap discovery.",
+    year: "2026",
+    role: "Full-Stack Developer & UI/UX Designer",
+    technologies: {
+      frontend: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+      backend: ["Node.js"],
+      apis: ["Vercel Edge", "PDF Processing"],
+    },
+    images: ["/projects/sourcewise.jpg"],
+    problem: "Traditional AI chatbots frequently hallucinate facts and invent fictional citations, creating severe academic integrity risks for students, researchers, and thesis writers who require verifiable evidence.",
+    solution: "Built SOURCEWISE, an evidence-first research workspace that synchronizes an interactive paper reader with an intelligent AI study assistant where every answer points directly to verifiable, clickable page-and-sentence highlights.",
+    architecture: "Engineered with Next.js App Router and Tailwind CSS, featuring an academic editorial design system, dual-pane interactive paper viewer, dynamic cross-paper matrix tables, and research gap exploration modules.",
+    features: [
+      "Evidence-grounded AI reading with clickable, word-for-word page proof citations",
+      "Dual-pane interactive paper reader synchronized with intelligent study assistant",
+      "Cross-paper comparative synthesis tables analyzing methods, results, and limitations",
+      "Novel research gap exploration engine to inspire thesis and project ideas",
+      "Distraction-free editorial reading experience optimized for desktop and tablet"
+    ],
+    challenges: "Designing an intuitive split-screen reading interface that allows readers to jump across pages and inspect sentence-level highlighted proofs instantly without disrupting reading flow.",
+    results: "Successfully engineered and launched a deployed web platform that eliminates AI citation hallucinations and substantially accelerates academic literature reviews.",
+    insights: "Grounding AI conversational interfaces in verifiable document coordinates transforms passive AI chat into an indispensable, trustworthy research environment.",
+    links: {
+      demo: "https://sourcewise-demo.vercel.app/"
+    }
+  },
+  {
     slug: "aurora",
     title: "AURORA",
     category: "Medical-Grade E-Commerce",
