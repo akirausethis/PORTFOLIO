@@ -49,13 +49,13 @@ export default function About() {
         {/* Top Row: Label + Headline split layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-24 lg:mb-32">
 
-          {/* Left: Badge + Stats */}
+          {/* Left: Badge + Photo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-4 flex flex-col justify-between gap-12 lg:pt-3"
+            className="lg:col-span-5 flex flex-col gap-10 lg:pt-3"
           >
             {/* Badge */}
             <div>
@@ -65,42 +65,82 @@ export default function About() {
               </span>
             </div>
 
-            {/* Photo */}
+            {/* Framed Photo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.96, rotate: -2 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full aspect-[3/4] max-w-[280px] overflow-hidden rounded-2xl bg-foreground/5"
+              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative w-full max-w-[460px] mx-auto lg:mx-0"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/profile.jpg"
-                alt="Kelvin Marcello"
-                className="w-full h-full object-cover object-top grayscale"
-              />
-              {/* Subtle overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent" />
-              {/* Caption tag */}
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                <span className="text-xs tracking-widest uppercase text-foreground/70 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/60">
-                  Kelvin Marcello
-                </span>
-                <span className="text-xs text-foreground/50 bg-background/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-border/60">
-                  2004
-                </span>
+              {/* Back layers (stacked card effect) */}
+              <div className="absolute inset-0 rounded-[28px] border border-dashed border-foreground/15 rotate-[4deg] translate-x-3 translate-y-3 transition-transform duration-700 group-hover:rotate-[6deg] group-hover:translate-x-4" />
+              <div className="absolute inset-0 rounded-[28px] bg-foreground/[0.04] border border-border -rotate-[2.5deg] -translate-x-2 translate-y-1 transition-transform duration-700 group-hover:-rotate-[4deg]" />
+
+              {/* Main frame (passe-partout) */}
+              <div className="relative rounded-[28px] bg-background border border-border p-3 sm:p-3.5 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)]">
+                {/* Frame top bar */}
+                <div className="flex items-center justify-between px-2 pb-3 pt-1">
+                  <span className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.2em] text-foreground/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                    Portrait — 001
+                  </span>
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-foreground/40">
+                    SBY, ID
+                  </span>
+                </div>
+
+                {/* Image */}
+                <div className="relative w-full aspect-[4/5] overflow-hidden rounded-[20px] bg-foreground/5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/profile.jpg"
+                    alt="Kelvin Marcello"
+                    className="w-full h-full object-cover object-top grayscale scale-[1.06] group-hover:grayscale-0 group-hover:scale-[1.1] transition-all duration-700 ease-out"
+                  />
+
+                  {/* Viewfinder corner brackets */}
+                  <span className="pointer-events-none absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-white/80 rounded-tl-md" />
+                  <span className="pointer-events-none absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-white/80 rounded-tr-md" />
+                  <span className="pointer-events-none absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-white/80 rounded-bl-md" />
+                  <span className="pointer-events-none absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-white/80 rounded-br-md" />
+
+                  {/* Center focus cross */}
+                  <span className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 opacity-0 group-hover:opacity-60 transition-opacity duration-500">
+                    <span className="absolute top-1/2 left-0 right-0 h-px bg-white" />
+                    <span className="absolute left-1/2 top-0 bottom-0 w-px bg-white" />
+                  </span>
+
+                  {/* Bottom gradient for readability */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent" />
+
+                  {/* Overlay caption */}
+                  <div className="absolute bottom-6 left-7 right-7 flex items-end justify-between text-white">
+                    <div>
+                      <p className="font-heading font-bold text-lg sm:text-xl leading-none tracking-tight">Kelvin Marcello</p>
+                      <p className="text-[11px] font-mono uppercase tracking-[0.15em] text-white/70 mt-1.5">Software Engineer</p>
+                    </div>
+                    <span className="text-[11px] font-mono text-white/70">EST. 2004</span>
+                  </div>
+                </div>
+
+                {/* Frame bottom bar */}
+                <div className="flex items-center justify-between px-2 pt-3 pb-1 text-[10px] font-mono uppercase tracking-[0.2em] text-foreground/40">
+                  <span>ƒ/1.8 · 1/250 · ISO 100</span>
+                  <span className="hidden sm:inline">vinworkspace.</span>
+                </div>
               </div>
             </motion.div>
           </motion.div>
 
           {/* Right: Headline + Body */}
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-7">
             <motion.h2
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-4xl md:text-5xl lg:text-7xl font-heading font-medium tracking-tight text-foreground leading-[1.05] mb-12"
+              className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium tracking-tight text-foreground leading-[1.05] mb-12"
             >
               Building things that
               {" "}<em className="not-italic text-foreground/30">actually matter</em>
