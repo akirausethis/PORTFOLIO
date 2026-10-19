@@ -109,32 +109,33 @@ export default function PromoMotionGraphicsPage() {
   const progressPercent = (currentTime / 30) * 100;
 
   return (
-    <div className="min-h-screen bg-[#070709] text-white flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 font-sans selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-[#070709] text-white flex flex-col items-center justify-start sm:justify-center p-4 sm:p-6 lg:p-10 pt-10 sm:pt-14 font-sans selection:bg-white selection:text-black">
       {/* Top Header / Context */}
-      <div className="w-full max-w-4xl flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+      <header className="w-full max-w-5xl flex flex-wrap items-center justify-between gap-4 mb-8 sm:mb-10 pb-5 border-b border-white/10">
         <div className="flex items-center gap-3">
           <Link
             href="/"
-            className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/50 hover:text-white transition-colors"
+            className="group inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/15 bg-white/5 hover:bg-white hover:text-black text-xs font-mono font-medium uppercase tracking-wider text-white/80 transition-all duration-300 active:scale-95 shadow-sm"
           >
-            ← Back to Portfolio
+            <span className="transform group-hover:-translate-x-0.5 transition-transform duration-200">←</span>
+            <span>Back to Portfolio</span>
           </Link>
-          <span className="text-white/20">/</span>
-          <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold flex items-center gap-1.5">
+          <span className="text-white/20 hidden sm:inline">/</span>
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            30s Motion Reel (9:16 Portrait)
+            30s Promo Motion Reel
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="text-[11px] font-mono px-3 py-1 rounded-full border border-white/15 bg-white/5 text-white/70 hover:bg-white/10 transition-colors"
+            className="text-[11px] font-mono px-3.5 py-1.5 rounded-full border border-white/15 bg-white/5 text-white/70 hover:bg-white/10 hover:text-white transition-colors"
           >
             {soundEnabled ? "🔊 Sound Ready" : "🔇 Visual Demo"}
           </button>
         </div>
-      </div>
+      </header>
 
       {/* Main Studio Workspace: 9:16 Mobile Viewport + Director Controls */}
       <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center justify-center">

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
 import { SiGithub, SiInstagram } from "@icons-pack/react-simple-icons";
 import { motion } from "framer-motion";
@@ -21,7 +22,12 @@ const socials = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname === "/promo") {
+    return null;
+  }
 
   return (
     <footer className="relative border-t border-border bg-background overflow-hidden">

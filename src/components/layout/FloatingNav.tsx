@@ -26,6 +26,10 @@ export default function FloatingNav() {
       setActiveSection("creative");
       return;
     }
+    if (pathname === "/promo") {
+      setActiveSection("promo");
+      return;
+    }
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 40);
@@ -50,6 +54,10 @@ export default function FloatingNav() {
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? "hidden" : "unset";
   }, [isMobileMenuOpen]);
+
+  if (pathname === "/promo") {
+    return null;
+  }
 
   return (
     <>

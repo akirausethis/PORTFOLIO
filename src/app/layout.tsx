@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 import CommandPalette from "@/components/ui/CommandPalette";
 import Preloader from "@/components/ui/Preloader";
+import PromoFloatingButton from "@/components/ui/PromoFloatingButton";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -83,6 +84,7 @@ export default function RootLayout({
           </main>
           <Footer />
           <ScrollToTop />
+          <PromoFloatingButton />
           <CommandPalette />
         </LenisProvider>
       </body>
