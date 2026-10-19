@@ -216,7 +216,8 @@ export default function FloatingNav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-xl flex flex-col px-5 sm:px-6 md:px-12 pt-24 sm:pt-28 pb-12 overflow-y-auto overflow-x-hidden"
+            data-lenis-prevent
+            className="fixed inset-0 z-40 bg-background/97 backdrop-blur-xl flex flex-col px-5 sm:px-6 md:px-12 pt-24 sm:pt-28 pb-12 overflow-y-auto overflow-x-hidden overscroll-contain"
           >
             {/* Dedicated Creative Feature Card in Mobile Menu */}
             <div className="mb-4">

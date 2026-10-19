@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -313,7 +313,7 @@ export default function CreativePage() {
         <div className="flex gap-8 lg:gap-12 items-start">
 
           {/* ── Sidebar (desktop) ── */}
-          <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto [scrollbar-width:none] py-8">
+          <aside data-lenis-prevent className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto [scrollbar-width:none] py-8">
             <div className="rounded-2xl border border-border/60 bg-background/60 backdrop-blur-sm p-5">
               <FilterPanel />
             </div>
@@ -386,7 +386,8 @@ export default function CreativePage() {
             <motion.div
               initial={{ x: "-100%" }} animate={{ x: 0 }} exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 z-[160] w-80 bg-background border-r border-border p-6 overflow-y-auto lg:hidden"
+              data-lenis-prevent
+              className="fixed inset-y-0 left-0 z-[160] w-80 bg-background border-r border-border p-6 overflow-y-auto overscroll-contain lg:hidden"
             >
               <button onClick={() => setMobileOpen(false)} className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full border border-border text-foreground/50 hover:text-foreground transition-all">
                 <X className="w-4 h-4" />

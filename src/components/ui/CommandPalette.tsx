@@ -81,15 +81,18 @@ export default function CommandPalette() {
     };
   }, []);
 
-  // Focus input on open
+  // Focus input on open + lock background page scroll
   useEffect(() => {
+    const lenis = (window as unknown as { __lenis?: { stop: () => void; start: () => void } }).__lenis;
     if (isOpen) {
       setQuery("");
       setSelectedIndex(0);
       setTimeout(() => inputRef.current?.focus(), 50);
       document.body.style.overflow = "hidden";
+      lenis?.stop();
     } else {
       document.body.style.overflow = "unset";
+      lenis?.start();
     }
   }, [isOpen]);
 
@@ -426,7 +429,8 @@ export default function CommandPalette() {
             {/* Results List */}
             <div
               ref={listRef}
-              className="overflow-y-auto p-2 divide-y divide-border/30 max-h-[50vh] scrollbar-thin"
+              data-lenis-prevent
+              className="overflow-y-auto overscroll-contain p-2 divide-y divide-border/30 max-h-[50vh] scrollbar-thin"
             >
               {filteredItems.length === 0 ? (
                 <div className="py-12 text-center text-foreground/40">

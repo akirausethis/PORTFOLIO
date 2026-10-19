@@ -22,8 +22,12 @@ export default function LenisProvider({ children }: { children: React.ReactNode 
 
     requestAnimationFrame(raf);
 
+    // Expose instance so overlays (command palette, menus) can pause page scrolling
+    (window as unknown as { __lenis?: Lenis }).__lenis = lenis;
+
     return () => {
       lenis.destroy();
+      delete (window as unknown as { __lenis?: Lenis }).__lenis;
     };
   }, []);
 
