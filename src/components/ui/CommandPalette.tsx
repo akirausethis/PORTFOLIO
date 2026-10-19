@@ -24,6 +24,7 @@ import {
   Layers,
   Code2,
   Award,
+  Film,
 } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { projectsData } from "@/data/projects";
@@ -206,6 +207,16 @@ export default function CommandPalette() {
         action: () => navigateTo("/creative"),
         keywords: ["photography", "design", "motion", "video", "photos", "reels"],
         badge: "Studio",
+      },
+      {
+        id: "nav-promo",
+        title: "30s Promo Motion Reel",
+        subtitle: "Dynamic portrait motion graphics showcase & storyboard",
+        category: "Navigation",
+        icon: Film,
+        action: () => navigateTo("/promo"),
+        keywords: ["promo", "motion graphics", "video", "reel", "commercial", "tiktok", "reels"],
+        badge: "New",
       },
       {
         id: "nav-comments",
