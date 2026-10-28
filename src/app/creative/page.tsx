@@ -48,6 +48,9 @@ const CAT_OVERLAY: Record<CreativeCategory, string> = {
 };
 
 function getYoutubeId(link: string) {
+  if (link.includes("youtube.com/shorts/")) {
+    return link.split("youtube.com/shorts/")[1]?.split("?")[0] ?? "";
+  }
   return link.split("youtu.be/")[1]?.split("?")[0] ?? "";
 }
 
