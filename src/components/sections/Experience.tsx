@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Briefcase, Code2, GraduationCap, Users, ChevronRight, MapPin, Calendar } from "lucide-react";
+import { Briefcase, Code2, GraduationCap, Users, ChevronRight, MapPin, Calendar, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 type ExperienceData = {
@@ -19,12 +19,57 @@ type ExperienceData = {
 
 const experiences: ExperienceData[] = [
   {
+    role: "Video Editor & AI Ads Specialist",
+    company: "CSYMedia",
+    period: "May 2025 – Present",
+    location: "Indonesia",
+    type: "Work",
+    isCurrent: true,
+    tags: ["Video Editing", "Meta Ads", "Generative AI", "CapCut", "After Effects", "Ad Creatives"],
+    icon: Video,
+    description: (
+      <div className="space-y-6">
+        <p className="text-base text-foreground/75 leading-relaxed font-light">
+          Producing high-converting short-form commercial advertisements and Meta Ads. Combining professional video editing with generative AI workflows to create engaging, modern promotional content for brand campaigns and client acquisition.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {[
+            {
+              title: "High-Converting Meta & Social Ads",
+              detail: "Editing dynamic, retention-focused video ads optimized for TikTok, Instagram Reels, and Meta ad placements."
+            },
+            {
+              title: "Generative AI Video Workflows",
+              detail: "Integrating generative AI tools to produce novel visual assets, synthetic b-roll, and engaging advertising hooks."
+            },
+            {
+              title: "Pacing, Motion & Sound Design",
+              detail: "Crafting kinetic subtitles, sound effects, and frame-accurate music synchronization to maximize click-through rates."
+            },
+            {
+              title: "Creative Direction & Ad Testing",
+              detail: "Collaborating on ad iterations, testing diverse hooks and angles to identify winning creative variations."
+            }
+          ].map((item, j) => (
+            <div key={j} className="flex gap-3 p-4 rounded-xl bg-foreground/[0.03] border border-border/50">
+              <ChevronRight className="w-4 h-4 text-foreground/30 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-sm font-semibold text-foreground/90 mb-1">{item.title}</p>
+                <p className="text-sm text-foreground/55 font-light leading-relaxed">{item.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  },
+  {
     role: "Software Engineer Intern",
     company: "Eterna Indonesia",
     period: "June 2026 – Oct 2026",
     location: "Jakarta, Indonesia",
     type: "Work",
-    isCurrent: true,
+    isCurrent: false,
     tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Discord API", "CI/CD"],
     icon: Code2,
     description: (
