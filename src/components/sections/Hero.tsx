@@ -143,18 +143,6 @@ export default function Hero() {
                 <p className="text-xs text-foreground/50 font-medium tracking-wide">Internship · Full-time</p>
               </div>
             </motion.div>
-
-            {/* Floating status pill — phone & tablet */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex lg:hidden absolute bottom-5 left-1/2 -translate-x-1/2 items-center gap-2 px-3.5 py-1.5 bg-background/95 backdrop-blur-md border border-border/80 rounded-full shadow-[0_4px_20px_rgb(0,0,0,0.06)] z-20 whitespace-nowrap"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[11px] font-semibold text-foreground/90 tracking-wide">Available for work</span>
-              <span className="text-[10px] text-foreground/40 font-mono">· Surabaya</span>
-            </motion.div>
           </motion.div>
 
           {/* Mobile gradient fade */}
@@ -220,7 +208,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex flex-col space-y-4 mb-12"
+              className="flex flex-col space-y-4 mb-10"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <Magnetic>
@@ -242,6 +230,15 @@ export default function Hero() {
                     Download CV
                   </a>
                 </Magnetic>
+              </div>
+
+              {/* Status pill on mobile — placed directly below Download CV */}
+              <div className="flex lg:hidden items-center justify-center pt-2">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-foreground/[0.03] border border-border/80 rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="text-xs font-semibold text-foreground/80 tracking-wide">Available for work</span>
+                  <span className="text-[10px] text-foreground/40 font-mono">· Surabaya</span>
+                </div>
               </div>
             </motion.div>
 
