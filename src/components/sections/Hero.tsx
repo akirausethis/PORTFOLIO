@@ -8,13 +8,12 @@ import {
   Download,
   Copy,
   Check,
-  Command,
   Clock,
   Sparkles,
   Code2,
   Film,
   Video,
-  ArrowRight,
+  Mail,
 } from "lucide-react";
 import { SiGithub, SiNextdotjs, SiReact, SiTypescript } from "@icons-pack/react-simple-icons";
 import Magnetic from "@/components/ui/Magnetic";
@@ -104,13 +103,6 @@ export default function Hero() {
     setTimeout(() => setCopied(false), 2400);
   };
 
-  // Trigger Command Palette
-  const openCommandPalette = () => {
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("open-command-palette"));
-    }
-  };
-
   const activeMarquee = mode === "code" ? codeStack : creativeStack;
 
   return (
@@ -124,17 +116,17 @@ export default function Hero() {
       <div className="absolute inset-0 pointer-events-none select-none z-0">
         {/* Subtle structural grid lines */}
         <div className="absolute left-[6%] top-0 bottom-0 w-px bg-foreground/[0.035] hidden lg:block" />
-        <div className="absolute left-[52%] top-0 bottom-0 w-px bg-foreground/[0.035] hidden lg:block" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-foreground/[0.035] hidden lg:block" />
         <div className="absolute right-[6%] top-0 bottom-0 w-px bg-foreground/[0.035] hidden lg:block" />
         <div className="absolute left-0 right-0 top-[20%] h-px bg-foreground/[0.03] hidden lg:block" />
         <div className="absolute left-0 right-0 top-[82%] h-px bg-foreground/[0.03] hidden lg:block" />
 
         {/* Blueprint crosshairs at structural intersections */}
         <div className="hero-crosshair left-[6%] top-[20%] -translate-x-1/2 -translate-y-1/2 hidden lg:block" />
-        <div className="hero-crosshair left-[52%] top-[20%] -translate-x-1/2 -translate-y-1/2 hidden lg:block" />
+        <div className="hero-crosshair left-1/2 top-[20%] -translate-x-1/2 -translate-y-1/2 hidden lg:block" />
         <div className="hero-crosshair right-[6%] top-[20%] translate-x-1/2 -translate-y-1/2 hidden lg:block" />
         <div className="hero-crosshair left-[6%] top-[82%] -translate-x-1/2 -translate-y-1/2 hidden lg:block" />
-        <div className="hero-crosshair left-[52%] top-[82%] -translate-x-1/2 -translate-y-1/2 hidden lg:block" />
+        <div className="hero-crosshair left-1/2 top-[82%] -translate-x-1/2 -translate-y-1/2 hidden lg:block" />
         <div className="hero-crosshair right-[6%] top-[82%] translate-x-1/2 -translate-y-1/2 hidden lg:block" />
 
         {/* Interactive radial ambient glow */}
@@ -157,7 +149,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex flex-wrap items-center justify-between gap-4 py-3 border-b border-foreground/[0.07] mb-6 sm:mb-8"
+          className="relative w-full flex flex-wrap items-center justify-between gap-4 py-3 border-b border-foreground/[0.07] mb-6 sm:mb-8 min-h-[52px]"
         >
           {/* Live Surabaya Clock & Location */}
           <div className="flex items-center gap-3">
@@ -172,11 +164,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* DUAL-MODE SWITCHER: Code vs Creative */}
-          <div className="flex items-center p-1 bg-foreground/[0.04] border border-foreground/[0.08] rounded-full">
+          {/* DUAL-MODE SWITCHER: Mathematically Centered at 50% with Equal Button Widths */}
+          <div className="md:absolute md:left-1/2 md:-translate-x-1/2 flex items-center p-1 bg-foreground/[0.04] border border-foreground/[0.08] rounded-full z-10 mx-auto md:mx-0">
             <button
               onClick={() => setMode("code")}
-              className={`relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
+              className={`relative flex items-center justify-center gap-2 w-[148px] sm:w-[156px] py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
                 mode === "code"
                   ? "text-background"
                   : "text-foreground/60 hover:text-foreground"
@@ -189,13 +181,13 @@ export default function Hero() {
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              <Code2 className="relative z-10 w-3.5 h-3.5" />
-              <span className="relative z-10">Software Engineer</span>
+              <Code2 className="relative z-10 w-3.5 h-3.5 shrink-0" />
+              <span className="relative z-10 truncate">Software Engineer</span>
             </button>
 
             <button
               onClick={() => setMode("creative")}
-              className={`relative flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
+              className={`relative flex items-center justify-center gap-2 w-[148px] sm:w-[156px] py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 ${
                 mode === "creative"
                   ? "text-background"
                   : "text-foreground/60 hover:text-foreground"
@@ -208,24 +200,16 @@ export default function Hero() {
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
                 />
               )}
-              <Film className="relative z-10 w-3.5 h-3.5" />
-              <span className="relative z-10">AI Ads & Video</span>
+              <Film className="relative z-10 w-3.5 h-3.5 shrink-0" />
+              <span className="relative z-10 truncate">Editor</span>
             </button>
           </div>
 
-          {/* Quick Command Launcher (Opens CommandPalette) */}
-          <div className="hidden sm:flex items-center gap-3">
-            <button
-              onClick={openCommandPalette}
-              className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-foreground/[0.03] hover:bg-foreground/[0.08] border border-foreground/[0.08] text-foreground/60 hover:text-foreground transition-all duration-200 text-xs font-mono"
-            >
-              <Command className="w-3 h-3 text-foreground/50 group-hover:text-foreground transition-colors" />
-              <span>⌘K Quick Menu</span>
-            </button>
-            <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-medium">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Available for Work</span>
-            </div>
+          {/* Right Status Indicator: Available for Work (Quick Menu removed) */}
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-600 font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="hidden sm:inline">Available for Work</span>
+            <span className="sm:hidden">Available</span>
           </div>
         </motion.div>
 
@@ -390,42 +374,52 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Socials & Location Details */}
+            {/* Socials & Location Details with Sleek Icons */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
-              className="flex items-center gap-4 text-xs font-mono text-foreground/50"
+              className="flex flex-wrap items-center gap-2.5 text-xs font-mono text-foreground/60 pt-1"
             >
-              <div className="flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-foreground/40" />
-                <span>Surabaya, Indonesia</span>
+              <div className="flex items-center gap-1.5 text-foreground/50 px-3 py-1.5 rounded-full bg-foreground/[0.03] border border-foreground/[0.07]">
+                <MapPin className="w-3.5 h-3.5 text-foreground/45" />
+                <span>Surabaya, ID</span>
               </div>
-              <span>•</span>
-              <div className="flex items-center gap-3">
+
+              <div className="flex items-center gap-2">
                 <a
                   href="https://github.com/akirausethis"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/[0.03] hover:bg-foreground/[0.08] border border-foreground/[0.08] text-foreground/70 hover:text-foreground transition-all duration-200"
+                  aria-label="GitHub"
                 >
-                  GitHub
+                  <SiGithub className="w-3.5 h-3.5" />
+                  <span>GitHub</span>
                 </a>
-                <span>/</span>
+
                 <a
                   href="https://linkedin.com/in/kelvinmarcello"
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/[0.03] hover:bg-foreground/[0.08] border border-foreground/[0.08] text-foreground/70 hover:text-foreground transition-all duration-200"
+                  aria-label="LinkedIn"
                 >
-                  LinkedIn
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                    <rect x="2" y="9" width="4" height="12" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                  <span>LinkedIn</span>
                 </a>
-                <span>/</span>
+
                 <a
                   href="mailto:akirabusinessinq@gmail.com"
-                  className="hover:text-foreground transition-colors"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-foreground/[0.03] hover:bg-foreground/[0.08] border border-foreground/[0.08] text-foreground/70 hover:text-foreground transition-all duration-200"
+                  aria-label="Inquiries"
                 >
-                  Inquiries
+                  <Mail className="w-3.5 h-3.5 text-foreground/60" />
+                  <span>Inquiries</span>
                 </a>
               </div>
             </motion.div>
